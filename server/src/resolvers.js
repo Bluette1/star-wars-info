@@ -1,0 +1,42 @@
+module.exports = {
+  Query: {
+    people: async (_, { page = 1 }, { dataSources }) => dataSources.personAPI.getAllPeople({
+      page,
+    }),
+    person: (_, { id, name }, { dataSources }) => {
+      let response;
+      if (id) {
+        response = dataSources.personAPI.getPersonById({ id });
+      }
+
+      if (name) {
+        response = dataSources.personAPI.getPersonByName({ name });
+      }
+      return response;
+    },
+
+    me: (_, __, { dataSources }) => dataSources.userAPI.findUser(),
+  },
+  Mutation: {
+    login: async (_, { email, password }, { dataSources }) => {
+      const user = await dataSources.userAPI.findUser({ email, password });
+      return user;
+    },
+
+    signup: async (_, { email, password, name }, { dataSources }) => {
+      const user = await dataSources.userAPI.createUser({
+        email,
+        password,
+        name,
+      });
+      return user;
+    },
+
+    postPerson: async (_, { personId, name }, { dataSources }) => dataSources.userAPI.addPerson({
+      name, personId,
+    }),
+  },
+  User: {
+    people: async (_, __, { dataSources }) => dataSources.userAPI.getPersonsByUser(),
+  },
+};

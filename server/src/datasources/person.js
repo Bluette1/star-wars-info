@@ -27,7 +27,6 @@ class PersonAPI extends RESTDataSource {
 
   async getPersonByName({ name }) {
     const params = encodeURIComponent(name);
-    console.log(params);
     const response = await this.get(`people/?search=${params}`);
     return personReducer(response.results[0]);
   }
