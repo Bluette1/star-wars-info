@@ -1,5 +1,15 @@
 const { RESTDataSource } = require('apollo-datasource-rest');
 
+const personReducer = person => {
+  this.person = {
+    name: person.name,
+    height: person.height,
+    gender: person.gender,
+    homeworld: person.homeworld,
+  };
+  return this.person;
+};
+
 class PersonAPI extends RESTDataSource {
   constructor() {
     super();
@@ -9,17 +19,8 @@ class PersonAPI extends RESTDataSource {
   async getAllPeople(page = 1) {
     const response = await this.get(`people/?page=${page}`);
     return Array.isArray(response)
-      ? response.map((person) => this.personReducer(person))
+      ? response.map(person => personReducer(person))
       : [];
-  }
-
-  personReducer(person) {
-    return {
-      name: person.name,
-      height: person.height,
-      gender: person.gender,
-      homeworld: person.homeworld,
-    };
   }
 
   async getPersonById({ id }) {
