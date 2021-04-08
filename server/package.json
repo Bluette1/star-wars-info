@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint . --ext .ts",
+    "lint": "eslint .",
     "lint-f": "eslint . --fix",
     "start": "node 'src/index.js'"
   },
@@ -13,6 +13,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^14.14.37",
+    "babel-eslint": "^10.1.0",
     "eslint": "^7.23.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-plugin-import": "^2.22.0",
@@ -29,11 +30,12 @@
     "apollo-server": "^2.22.2",
     "apollo-server-express": "^2.22.2",
     "apollo-server-testing": "^2.22.2",
-    "babel-eslint": "^10.1.0",
+    "bcryptjs": "^2.4.3",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "graphql": "^15.5.0",
     "isemail": "^3.2.0",
+    "jsonwebtoken": "^8.5.1",
     "pg": "^8.5.1"
   }
 }

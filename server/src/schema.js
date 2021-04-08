@@ -15,16 +15,10 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    post(name: String!, personId: String!): Person!
-    signup(email: String!, password: String!, name: String!): AuthPayload
-    login(email: String!, password: String!): AuthPayload
+    postPerson(name: String!, personId: Int!): PostPersonResponse!
+    signup(email: String!, password: String!, name: String!): User
+    login(email: String!, password: String!): User
   }
-
-  type AuthPayload {
-    token: String
-    user: User
-  }
-
 
   type User {
     id: ID!
@@ -32,6 +26,13 @@ const typeDefs = gql`
     email: String!
     people: [Person]!
     token: String
+  }
+
+  type PostPersonResponse {
+    id: ID!
+    personId: Int!
+    name: String!
+    postedById: ID!
   }
 `;
 

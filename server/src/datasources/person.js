@@ -1,36 +1,35 @@
 const { RESTDataSource } = require('apollo-datasource-rest');
 
-const personReducer = person => {
-  this.person = {
-    name: person.name,
-    height: person.height,
-    gender: person.gender,
-    homeworld: person.homeworld,
-  };
-  return this.person;
-};
+const personReducer = person => ({
+  name: person.name,
+  height: person.height,
+  gender: person.gender,
+  homeworld: person.homeworld,
+});
 
 class PersonAPI extends RESTDataSource {
   constructor() {
     super();
-    this.baseURL = 'https://swapi.dev/';
+    this.baseURL = 'https://swapi.dev/api/';
   }
 
-  async getAllPeople(page = 1) {
+  async getAllPeople({ page }) {
     const response = await this.get(`people/?page=${page}`);
-    return Array.isArray(response)
-      ? response.map(person => personReducer(person))
+    return Array.isArray(response.results)
+      ? response.results.map(person => personReducer(person))
       : [];
   }
 
   async getPersonById({ id }) {
-    const response = await this.get('people', { id });
-    return this.personReducer(response[0]);
+    const response = await this.get(`people/${id}`);
+    return personReducer(response);
   }
 
   async getPersonByName({ name }) {
-    const response = await this.get(`people/?search=${name}`);
-    return this.personReducer(response[0]);
+    const params = encodeURIComponent(name);
+    console.log(params);
+    const response = await this.get(`people/?search=${params}`);
+    return personReducer(response.results[0]);
   }
 }
 
