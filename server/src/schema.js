@@ -15,8 +15,8 @@ const typeDefs = gql`
   }
 
   type Query {
-    people(page: Int!): [Person]
-    person(name: String!): Person
+    people(page: Int): [Person]
+    person(name: String, id: Int): Person
     me: User
   }
 `;
