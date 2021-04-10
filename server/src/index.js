@@ -30,7 +30,7 @@ const server = new ApolloServer({
   dataSources,
 });
 server.applyMiddleware({ app });
-// await server.start();
+
 if (process.env.NODE_ENV !== 'test') {
   app.use(express.static('public'));
 
@@ -50,12 +50,6 @@ if (process.env.NODE_ENV !== 'test') {
     );
   });
 }
-// return { server, app };
-// }
-// async function getServer() {
-//   const { server } = await startApolloServer();
-//   return server;
-// }
 
 // export all the important pieces for integration/e2e tests to use
 module.exports = {
