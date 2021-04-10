@@ -93,4 +93,4 @@ describe('[PersonAPI.getPersonById]', () => {
   });
 });
 
-module.exports.mockPersonResponse = mockPersonResponse;
+module.exports = { mockPersonResponse, mockPerson };

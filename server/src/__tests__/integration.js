@@ -3,8 +3,7 @@ const gql = require('graphql-tag');
 const { constructTestServer } = require('./__utils');
 
 // the mocked REST API data
-const { mockPersonResponse } = require('../datasources/__tests__/person');
-// the mocked Pg DataSource store
+const { mockPersonResponse, mockPerson } = require('../datasources/__tests__/person');
 
 const PEOPLE_LIST_QUERY = gql`
   query people($page: Int) {
@@ -51,7 +50,7 @@ describe('Queries', () => {
 
     // mock the datasources' underlying fetch methods, whether that's a REST
     // lookup in the RESTDataSource or the store query in the Sequelize datasource
-    personAPI.getAllPeople = jest.fn(() => [mockPersonResponse]);
+    personAPI.get = jest.fn(() => ({ results: [mockPersonResponse] }));
 
     // use our test server as input to the createTestClient fn
     // This will give us an interface, similar to apolloClient.query
@@ -59,6 +58,7 @@ describe('Queries', () => {
     const { query } = createTestClient(server);
     const res = await query({ query: PEOPLE_LIST_QUERY });
     expect(res).toMatchSnapshot();
+    expect(res.data.people).toEqual([mockPerson]);
   });
 
   it('fetches single person by id', async () => {
@@ -71,14 +71,15 @@ describe('Queries', () => {
     const { query } = createTestClient(server);
     const res = await query({ query: GET_PERSON_BY_ID, variables: { id: 1 } });
     expect(res).toMatchSnapshot();
+    expect(res.data.person).toEqual(mockPerson);
   });
 
-  it('fetches single person by id', async () => {
+  it('fetches single person by name', async () => {
     const { server, personAPI } = constructTestServer({
       context: () => ({ userId: 1 }),
     });
 
-    personAPI.get = jest.fn(() => mockPersonResponse);
+    personAPI.get = jest.fn(() => ({ results: [mockPersonResponse] }));
 
     const { query } = createTestClient(server);
     const res = await query({
@@ -86,5 +87,6 @@ describe('Queries', () => {
       variables: { name: 'Luke Skywalker' },
     });
     expect(res).toMatchSnapshot();
+    expect(res.data.person).toEqual(mockPerson);
   });
 });

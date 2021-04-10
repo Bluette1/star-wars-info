@@ -3,7 +3,7 @@ const { gql } = require('apollo-server');
 const typeDefs = gql`
   type Person {
     name: String!
-    height: Float!
+    height: String!
     gender: String!
     homeworld: String!
   }
@@ -38,7 +38,7 @@ const typeDefs = gql`
 
   type PersonWithId {
     name: String!
-    height: Float!
+    height: String!
     gender: String!
     homeworld: String!
     id: Int!
