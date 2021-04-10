@@ -1,5 +1,9 @@
 const { RESTDataSource } = require('apollo-datasource-rest');
 
+const getPersonId = url => {
+  const splitArray = url.split('/');
+  return parseInt(splitArray[0], 10);
+};
 const personReducer = person => ({
   name: person.name,
   height: person.height,
@@ -14,11 +18,6 @@ const personWithIdReducer = person => ({
   gender: person.gender,
   homeworld: person.homeworld,
 });
-
-const getPersonId = url => {
-  const splitArray = url.split('/');
-  return parseInt(splitArray[0]);
-};
 
 class PersonAPI extends RESTDataSource {
   constructor() {

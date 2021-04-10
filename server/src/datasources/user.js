@@ -33,7 +33,6 @@ class UserAPI extends DataSource {
       return user;
     }
     user = await this.store.user.findUnique({ where: { email: emailArg } });
-    console.log('Here!!!', user);
 
     if (!user) {
       return null;

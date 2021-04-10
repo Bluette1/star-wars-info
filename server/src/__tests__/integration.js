@@ -1,12 +1,10 @@
 const { createTestClient } = require('apollo-server-testing');
 const gql = require('graphql-tag');
-const nock = require('nock');
 const { constructTestServer } = require('./__utils');
 
 // the mocked REST API data
 const { mockPersonResponse } = require('../datasources/__tests__/person');
 // the mocked Pg DataSource store
-const { mockStore } = require('../datasources/__tests__/user');
 
 const PEOPLE_LIST_QUERY = gql`
   query people($page: Int) {
@@ -40,13 +38,7 @@ const GET_PERSON_BY_ID = gql`
     }
   }
 `;
-const LOGIN = gql`
-  mutation login($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
-      token
-    }
-  }
-`;
+
 describe('Queries', () => {
   it('fetches list of people', async () => {
     // create an instance of ApolloServer that mocks out context, while reusing
@@ -78,6 +70,21 @@ describe('Queries', () => {
 
     const { query } = createTestClient(server);
     const res = await query({ query: GET_PERSON_BY_ID, variables: { id: 1 } });
+    expect(res).toMatchSnapshot();
+  });
+
+  it('fetches single person by id', async () => {
+    const { server, personAPI } = constructTestServer({
+      context: () => ({ userId: 1 }),
+    });
+
+    personAPI.get = jest.fn(() => mockPersonResponse);
+
+    const { query } = createTestClient(server);
+    const res = await query({
+      query: GET_PERSON_BY_NAME,
+      variables: { name: 'Luke Skywalker' },
+    });
     expect(res).toMatchSnapshot();
   });
 });
