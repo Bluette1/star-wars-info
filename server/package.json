@@ -6,19 +6,27 @@
   "scripts": {
     "lint": "eslint .",
     "lint-f": "eslint . --fix",
-    "start": "node 'src/index.js'"
+    "dev": "nodemon 'src/index.js'",
+    "start": "node 'src/index.js'",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^14.14.37",
+    "apollo-link": "^1.2.14",
+    "apollo-link-http": "^1.5.17",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.23.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.23.1",
+    "jest": "^26.6.3",
+    "nock": "^13.0.11",
+    "node-fetch": "^2.6.1",
+    "nodemon": "^2.0.7",
     "prisma": "2.20.1",
     "typescript": "^4.2.3"
   },
@@ -37,5 +45,11 @@
     "isemail": "^3.2.0",
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.5.1"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/__utils"
+    ]
   }
 }

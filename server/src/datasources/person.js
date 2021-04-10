@@ -7,10 +7,25 @@ const personReducer = person => ({
   homeworld: person.homeworld,
 });
 
+const personWithIdReducer = person => ({
+  id: getPersonId(person.url),
+  name: person.name,
+  height: person.height,
+  gender: person.gender,
+  homeworld: person.homeworld,
+});
+
+const getPersonId = url => {
+  const splitArray = url.split('/');
+  return parseInt(splitArray[0]);
+};
+
 class PersonAPI extends RESTDataSource {
   constructor() {
     super();
     this.baseURL = 'https://swapi.dev/api/';
+    this.personReducer = personReducer;
+    this.personWithIdReducer = personWithIdReducer;
   }
 
   async getAllPeople({ page }) {
@@ -29,6 +44,12 @@ class PersonAPI extends RESTDataSource {
     const params = encodeURIComponent(name);
     const response = await this.get(`people/?search=${params}`);
     return personReducer(response.results[0]);
+  }
+
+  async getPersonByNameWithId({ name }) {
+    const params = encodeURIComponent(name);
+    const response = await this.get(`people/?search=${params}`);
+    return personWithIdReducer(response.results[0]);
   }
 }
 

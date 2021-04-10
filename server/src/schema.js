@@ -16,6 +16,7 @@ const typeDefs = gql`
 
   type Mutation {
     postPerson(name: String!, personId: Int!): PostPersonResponse!
+    postPersonWithName(name: String!): PostPersonResponse!
     signup(email: String!, password: String!, name: String!): User
     login(email: String!, password: String!): User
   }
@@ -33,6 +34,14 @@ const typeDefs = gql`
     personId: Int!
     name: String!
     postedById: ID!
+  }
+
+  type PersonWithId {
+    name: String!
+    height: Float!
+    gender: String!
+    homeworld: String!
+    id: Int!
   }
 `;
 

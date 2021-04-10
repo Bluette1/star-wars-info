@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const { APP_SECRET } = process.env;
+const APP_SECRET = process.env.APP_SECRET || 'GraphQL-is-aw3some';
 
 function getTokenPayload(token) {
   return jwt.verify(token, APP_SECRET);

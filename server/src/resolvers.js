@@ -33,8 +33,17 @@ module.exports = {
     },
 
     postPerson: async (_, { personId, name }, { dataSources }) => dataSources.userAPI.addPerson({
-      name, personId,
+      name,
+      personId,
     }),
+
+    postPersonWithName: async (_, { name }, { dataSources }) => {
+      const user = dataSources.personAPI.getPersonByNameWithId({ name });
+      return dataSources.userAPI.addPerson({
+        personId: user.id,
+        name,
+      });
+    },
   },
   User: {
     people: async (_, __, { dataSources }) => dataSources.userAPI.getPersonsByUser(),
