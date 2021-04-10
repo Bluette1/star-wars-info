@@ -29,4 +29,15 @@ describe('[UserAPI.findUser]', () => {
     mockStore.user.findUnique.mockReturnValueOnce(null);
     expect(res).toEqual(null);
   });
+
+  it('looks up user in store', async () => {
+    ds.initialize({ context: {} });
+
+    mockStore.user.findUnique.mockReturnValueOnce({ id: 1, password: 'password' });
+    await ds.findUser({ email: 'a@a.a', password: 'password' });
+
+    expect(mockStore.user.findUnique).toBeCalledWith({
+      where: { email: 'a@a.a' },
+    });
+  });
 });
