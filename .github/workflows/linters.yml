@@ -6,8 +6,8 @@ env:
   FORCE_COLOR: 1
 
 jobs:
-  eslint:
-    name: ESLint
+  eslint-server:
+    name: ESLint on server
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
@@ -20,3 +20,16 @@ jobs:
           [ -f .eslintrc.json ] || wget https://raw.githubusercontent.com/microverseinc/linters-config/master/react-redux/.eslintrc.json
       - name: ESLint Report
         run: cd server/ && npx eslint .
+  eslint-client:
+    name: ESLint on client
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+      - name: Setup ESLint dependencies
+        run: |
+          cd client/ && npm install
+      - name: ESLint Report
+        run: cd client/ && npx eslint '*/**/*.{js,ts,tsx}'
