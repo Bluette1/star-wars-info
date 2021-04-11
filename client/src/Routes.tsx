@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import LoginForm from './components/login-form';
 import Me from './components/me';
-import RegisterForm from './components/register-form ';
+import RegisterForm from './components/register-form';
 
 export class Routes extends Component {
   render() {
