@@ -1,7 +1,8 @@
 import React from 'react';
 import { gql, useMutation } from '@apollo/client';
 import PropTypes from 'prop-types';
-import LoginForm from './components/login-form';
+// import LoginForm from './components/login-form';
+// import People from './components/people';
 import { isLoggedInVar } from './cache';
 
 export const LOGIN_USER = gql`
@@ -14,15 +15,15 @@ export const LOGIN_USER = gql`
 `;
 
 export default function Login({ email, password }) {
-  const [login, { loading, error }] = useMutation(LOGIN_USER, {
+  const [loginFn, { loading, error }] = useMutation(LOGIN_USER, {
     variables: {
       email,
       password,
     },
-    onCompleted: ({ user }) => {
-      if (user) {
-        localStorage.setItem('token', user.token as string);
-        localStorage.setItem('userId', user.id as string);
+    onCompleted: ({ login }) => {
+      if (login) {
+        localStorage.setItem('token', login.token as string);
+        localStorage.setItem('userId', login.id as string);
         isLoggedInVar(true);
       }
     },
@@ -30,7 +31,8 @@ export default function Login({ email, password }) {
   if (loading) return <h4>Loading...</h4>;
   if (error) return <p>An error occurred</p>;
 
-  return <LoginForm login={login} />;
+  console.log('HHHHHHHHH', loginFn);
+  return loginFn;
 }
 
 Login.propTypes = {

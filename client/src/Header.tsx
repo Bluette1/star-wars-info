@@ -1,10 +1,10 @@
 import React from 'react';
 import logo from './star-wars-logo.svg';
-import './App.css';
+import './Header.css';
 
-function App() {
+function Header() {
   return (
-    <div className="App">
+    <div className="header">
       <img
         src={logo}
         alt="StarWars"
@@ -14,4 +14,4 @@ function App() {
   );
 }
 
-export default App;
+export default Header;

@@ -1,22 +1,56 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import './index.css';
-import Header from './App';
+import {
+  ApolloClient,
+  NormalizedCacheObject,
+  ApolloProvider,
+  gql,
+  useQuery,
+} from '@apollo/client';
+import Header from './Header';
 import Routes from './Routes';
+import LoginForm from './components/login-form';
+import { cache } from './cache';
 
-const client = new ApolloClient({
-  uri: '/graphql',
-  cache: new InMemoryCache(),
+const typeDefs = gql`
+  extend type Query {
+    isLoggedIn: Boolean!
+  }
+`;
+
+// Set up our apollo-client to point at the server we created
+// this can be local or a remote endpoint
+const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
+  cache,
+  uri: 'http://localhost:4000/graphql',
+  headers: {
+    authorization: localStorage.getItem('token') || '',
+    'client-name': 'Star Wars [web]',
+    'client-version': '1.0.0',
+  },
+  typeDefs,
+  resolvers: {},
 });
+
+const IS_LOGGED_IN = gql`
+  query IsUserLoggedIn {
+    isLoggedIn @client
+  }
+`;
+
+function IsLoggedIn() {
+  const { data } = useQuery(IS_LOGGED_IN);
+  console.log(data);
+  return data.isLoggedIn ? <Routes /> : <LoginForm />;
+}
 
 ReactDOM.render(
   <ApolloProvider client={client}>
     <React.StrictMode>
       <Header />
-      <Routes />
+      <IsLoggedIn />
     </React.StrictMode>
   </ApolloProvider>,
-
   document.getElementById('root'),
 );

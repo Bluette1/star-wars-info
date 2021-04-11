@@ -1,12 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {
   Formik, Form, Field, ErrorMessage,
 } from 'formik';
+import login from '../login';
 
-export default function LoginForm({ login }) {
+export default function LoginForm() {
   return (
-    <div className="row d-flex justify-content-center form">
+    <div className="row d-flex justify-content-center form mt-5 pb-5">
       <div className="col-md-3">
         <h4>Login</h4>
         <Formik
@@ -24,8 +24,7 @@ export default function LoginForm({ login }) {
           }}
           onSubmit={(values, { setSubmitting }) => {
             setTimeout(() => {
-              // alert(JSON.stringify(values, null, 2));
-              login(values.email, values.password);
+              login(values);
               setSubmitting(false);
             }, 400);
           }}
@@ -56,6 +55,3 @@ export default function LoginForm({ login }) {
     </div>
   );
 }
-LoginForm.propTypes = {
-  login: PropTypes.func.isRequired,
-};
