@@ -12,7 +12,7 @@ export default function RegisterForm() {
         <Formik
           initialValues={{ email: '', password: '', passwordConfirmation: '' }}
           validate={(values) => {
-            const errors = { email: '' };
+            const errors = { email: '', password: '' };
             if (!values.email) {
               errors.email = 'Required';
             } else if (
@@ -20,7 +20,7 @@ export default function RegisterForm() {
             ) {
               errors.email = 'Invalid email address';
             } else if (values.password !== values.passwordConfirmation) {
-              errors.email = 'Invalid password';
+              errors.password = 'Invalid password';
             }
             return errors;
           }}

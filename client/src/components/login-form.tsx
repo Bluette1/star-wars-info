@@ -3,6 +3,7 @@ import {
   Formik, Form, Field, ErrorMessage,
 } from 'formik';
 import login from '../login';
+import RegisterButton from '../register-button';
 
 export default function LoginForm() {
   return (
@@ -51,6 +52,7 @@ export default function LoginForm() {
             </Form>
           )}
         </Formik>
+        <RegisterButton />
       </div>
     </div>
   );

@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Me from './components/me';
-import People from './components/people';
+import LoginForm from './login-form';
+import RegisterForm from './register-form';
 
 export class Routes extends Component {
   render() {
     return (
       <Switch>
-        <Route exact path="/me" component={Me} />
-        <Route exact path="/" component={People} />
+        <Route exact path="/register" component={RegisterForm} />
+        <Route exact path="/login" component={LoginForm} />
       </Switch>
     );
   }

@@ -1,8 +1,6 @@
 import React from 'react';
 import { gql, useMutation } from '@apollo/client';
 import PropTypes from 'prop-types';
-// import LoginForm from './components/login-form';
-// import People from './components/people';
 import { isLoggedInVar } from './cache';
 
 export const LOGIN_USER = gql`

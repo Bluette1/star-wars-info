@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import {
   ApolloClient,
@@ -10,6 +11,7 @@ import {
 } from '@apollo/client';
 import Header from './Header';
 import Routes from './Routes';
+// import PublicRoutes from './components/PublicRoutes';
 import LoginForm from './components/login-form';
 import { cache } from './cache';
 
@@ -47,10 +49,12 @@ function IsLoggedIn() {
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <React.StrictMode>
-      <Header />
-      <IsLoggedIn />
-    </React.StrictMode>
+    <BrowserRouter>
+      <React.StrictMode>
+        <Header />
+        <IsLoggedIn />
+      </React.StrictMode>
+    </BrowserRouter>
   </ApolloProvider>,
   document.getElementById('root'),
 );
