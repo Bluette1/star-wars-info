@@ -1,6 +1,6 @@
 import React from 'react';
 import { gql, useMutation } from '@apollo/client';
-
+import PropTypes from 'prop-types';
 import LoginForm from './components/login-form';
 import { isLoggedInVar } from './cache';
 
@@ -32,3 +32,8 @@ export default function Login({ email, password }) {
 
   return <LoginForm login={login} />;
 }
+
+Login.propTypes = {
+  email: PropTypes.string.isRequired,
+  password: PropTypes.string.isRequired,
+};

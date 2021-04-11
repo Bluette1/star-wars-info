@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import {
   Formik, Form, Field, ErrorMessage,
 } from 'formik';
@@ -18,7 +20,7 @@ export default function RegisterForm({ login }) {
               !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
             ) {
               errors.email = 'Invalid email address';
-            } else if (values.password != values.passwordConfirmation) {
+            } else if (values.password !== values.passwordConfirmation) {
               errors.email = 'Invalid password';
             }
             return errors;
@@ -63,3 +65,7 @@ export default function RegisterForm({ login }) {
     </div>
   );
 }
+
+RegisterForm.propTypes = {
+  login: PropTypes.func.isRequired,
+};
