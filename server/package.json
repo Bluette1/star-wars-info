@@ -6,9 +6,11 @@
   "scripts": {
     "lint": "eslint .",
     "lint-f": "eslint . --fix",
-    "dev": "nodemon 'src/index.js'",
-    "start": "node 'src/index.js'",
-    "test": "jest"
+    "dev:server": "nodemon 'src/index.js'",
+    "server": "node 'src/index.js'",
+    "test": "jest",
+    "client": "npm start --prefix ../client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [],
   "author": "",
@@ -39,6 +41,7 @@
     "apollo-server-express": "^2.22.2",
     "apollo-server-testing": "^2.22.2",
     "bcryptjs": "^2.4.3",
+    "concurrently": "^6.0.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "graphql": "^15.5.0",
