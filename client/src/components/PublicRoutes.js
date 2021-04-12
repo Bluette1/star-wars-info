@@ -11,6 +11,7 @@ export class Routes extends Component {
         <Header />
         <Route exact path="/register" component={RegisterForm} />
         <Route exact path="/" component={LoginForm} />
+        <Route exact path="/login" component={LoginForm} />
       </div>
     );
   }
