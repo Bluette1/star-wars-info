@@ -43,6 +43,21 @@ const typeDefs = gql`
     homeworld: String!
     id: Int!
   }
+
+  type PersonDetails {
+    name: String!
+    height: String!
+    gender: String!
+    homeworld: String!
+    eye_color: String!
+    hair_color: String!
+    skin_color: String!
+    films:[String!]
+    species: [String!]
+    vehicles: [String!]
+    starships: [String!]
+    url: String!
+  }
 `;
 
 module.exports = typeDefs;

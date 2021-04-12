@@ -15,6 +15,18 @@ module.exports = {
       return response;
     },
 
+    personDetails: (_, { id, name }, { dataSources }) => {
+      let response;
+      if (id) {
+        response = dataSources.personAPI.getPersonDetailsById({ id });
+      }
+
+      if (name) {
+        response = dataSources.personAPI.getPersonDetailsByName({ name });
+      }
+      return response;
+    },
+
     me: (_, __, { dataSources }) => dataSources.userAPI.findUser(),
   },
   Mutation: {

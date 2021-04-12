@@ -19,6 +19,21 @@ const personWithIdReducer = person => ({
   homeworld: person.homeworld,
 });
 
+const personDetailsReducer = person => ({
+  name: person.name,
+  height: person.height,
+  gender: person.gender,
+  homeworld: person.homeworld,
+  eyeColor: person.eye_color,
+  hairColor: person.hair_color,
+  skinColor: person.skin_color,
+  films: person.films,
+  species: person.species,
+  vehicles: person.vehicles,
+  starships: person.starships,
+  url: person.url,
+});
+
 class PersonAPI extends RESTDataSource {
   constructor() {
     super();
@@ -49,6 +64,17 @@ class PersonAPI extends RESTDataSource {
     const params = encodeURIComponent(name);
     const response = await this.get(`people/?search=${params}`);
     return personWithIdReducer(response.results[0]);
+  }
+
+  async getPersonDetailsByName({ name }) {
+    const params = encodeURIComponent(name);
+    const response = await this.get(`people/?search=${params}`);
+    return personDetailsReducer(response.results[0]);
+  }
+
+  async getPersonDetailsById({ id }) {
+    const response = await this.get(`people/${id}`);
+    return personDetailsReducer(response);
   }
 }
 
