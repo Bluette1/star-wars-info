@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { useHistory } from 'react-router-dom';
 import { gql, useMutation } from '@apollo/client';
 import RegisterButton from '../register-button';
 import { isLoggedInVar } from '../cache';
@@ -12,12 +13,14 @@ export const LOGIN_USER = gql`
   }
 `;
 const LoginForm = () => {
+  const history = useHistory();
   const [mutation, { loading, error }] = useMutation(LOGIN_USER, {
     onCompleted: ({ login }) => {
       if (login) {
         localStorage.setItem('token', login.token as string);
         localStorage.setItem('userId', login.id as string);
         isLoggedInVar(true);
+        history.push('/');
       }
     },
   });

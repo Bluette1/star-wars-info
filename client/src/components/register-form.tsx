@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { gql, useMutation } from '@apollo/client';
 import { isLoggedInVar } from '../cache';
 
@@ -12,12 +13,14 @@ export const REGISTER_USER = gql`
 `;
 
 export default function RegisterForm() {
+  const history = useHistory();
   const [registerUser, { loading, error }] = useMutation(REGISTER_USER, {
     onCompleted: ({ signup }) => {
       if (signup) {
         localStorage.setItem('token', signup.token as string);
         localStorage.setItem('userId', signup.id as string);
         isLoggedInVar(true);
+        history.push('/');
       }
     },
   });

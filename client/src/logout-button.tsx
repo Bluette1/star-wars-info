@@ -10,6 +10,7 @@ const LogoutButton = () => {
       style={{ padding: 0 }}
       data-testid="logout-button"
       type="button"
+      className="btn btn-secondary p-2"
       onClick={() => {
         client.cache.evict({ fieldName: 'me' });
         client.cache.gc();
