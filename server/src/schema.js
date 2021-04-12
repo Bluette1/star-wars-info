@@ -11,6 +11,7 @@ const typeDefs = gql`
   type Query {
     people(page: Int): [Person]
     person(name: String, id: Int): Person
+    personDetails(name: String, id: Int): PersonDetails
     me: User
   }
 

@@ -1,5 +1,3 @@
-// import React from 'react';
-
 import React, { Fragment } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import uuid from 'react-uuid';

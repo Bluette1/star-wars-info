@@ -1,7 +1,8 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import uuid from 'react-uuid';
 import { gql, useQuery } from '@apollo/client';
+import PropTypes from 'prop-types';
 import LinkItem from './link-item';
 
 const PERSON_QUERY = gql`
@@ -109,6 +110,10 @@ const Person = ({ match: { params } }) => {
       </Link>
     </div>
   );
+};
+
+Person.propTypes = {
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default Person;

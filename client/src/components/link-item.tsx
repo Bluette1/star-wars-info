@@ -1,9 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default function LinkItem({link}) {
-  return (
-    <h6>
-      {`<${link}>`}
-    </h6>
-  );
-}
+const LinkItem = ({ link }) => (
+  <h6>
+    {`<${link}>`}
+  </h6>
+);
+
+LinkItem.propTypes = {
+  link: PropTypes.string.isRequired,
+};
+
+export default LinkItem;
