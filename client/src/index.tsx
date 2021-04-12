@@ -9,10 +9,8 @@ import {
   gql,
   useQuery,
 } from '@apollo/client';
-import Header from './Header';
 import Routes from './Routes';
-// import PublicRoutes from './components/PublicRoutes';
-import LoginForm from './components/login-form';
+import PublicRoutes from './components/PublicRoutes';
 import { cache } from './cache';
 
 const typeDefs = gql`
@@ -44,14 +42,13 @@ const IS_LOGGED_IN = gql`
 function IsLoggedIn() {
   const { data } = useQuery(IS_LOGGED_IN);
   console.log(data);
-  return data.isLoggedIn ? <Routes /> : <LoginForm />;
+  return data.isLoggedIn ? <Routes /> : <PublicRoutes />;
 }
 
 ReactDOM.render(
   <ApolloProvider client={client}>
     <BrowserRouter>
       <React.StrictMode>
-        <Header />
         <IsLoggedIn />
       </React.StrictMode>
     </BrowserRouter>
