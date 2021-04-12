@@ -18,4 +18,6 @@ code {
 
 .form-elements {
   border-radius: 5%;
+  width: 85px;
+  margin-bottom: 50px;
 }
