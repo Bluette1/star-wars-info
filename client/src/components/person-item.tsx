@@ -14,9 +14,18 @@ const PersonItem = ({
           Name:&nbsp;
           <span>{name}</span>
         </h4>
-        <p>{height}</p>
-        <p>{gender}</p>
-        <p>{homeworld}</p>
+        <p>
+          Height:&nbsp;
+          {height}
+        </p>
+        <p>
+          Gender:&nbsp;
+          {gender}
+        </p>
+        <p>
+          Homeworld:&nbsp;
+          {homeworld}
+        </p>
       </div>
       <div className="col-md-3">
         <Link to={`/person/?search=${name}`} className="btn btn-secondary">

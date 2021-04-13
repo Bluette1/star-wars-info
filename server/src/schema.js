@@ -50,9 +50,9 @@ const typeDefs = gql`
     height: String!
     gender: String!
     homeworld: String!
-    eye_color: String!
-    hair_color: String!
-    skin_color: String!
+    eyeColor: String!
+    hairColor: String!
+    skinColor: String!
     films:[String!]
     species: [String!]
     vehicles: [String!]

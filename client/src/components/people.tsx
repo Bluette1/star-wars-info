@@ -3,6 +3,7 @@ import { gql, useQuery } from '@apollo/client';
 import uuid from 'react-uuid';
 import Logout from '../logout-button';
 import PersonItem from './person-item';
+import authLink from '../auth-link';
 
 const PEOPLE_QUERY = gql`
   query People($page: Int) {
@@ -16,7 +17,10 @@ const PEOPLE_QUERY = gql`
 `;
 
 const People = () => {
-  const { loading, error, data } = useQuery(PEOPLE_QUERY);
+  const { loading, error, data } = useQuery(
+    PEOPLE_QUERY,
+    { context: authLink },
+  );
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{`Error :( ${error}`}</p>;

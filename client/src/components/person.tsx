@@ -1,13 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import uuid from 'react-uuid';
+import QueryString from 'query-string';
 import { gql, useQuery } from '@apollo/client';
 import PropTypes from 'prop-types';
 import LinkItem from './link-item';
+import authLink from '../auth-link';
 
 const PERSON_QUERY = gql`
-  query Person($name: String!) {
-    person(name: $name) {
+  query PersonDetails($name: String!) {
+    personDetails(name: $name) {
       name
       height
       gender
@@ -24,10 +26,14 @@ const PERSON_QUERY = gql`
   }
 `;
 
-const Person = ({ match: { params } }) => {
-  const personName = params.name;
+const Person = ({ location: searchParams }) => {
+  const parsedParams = QueryString.parse(searchParams.search);
+  const {
+    search,
+  } = parsedParams;
+
   const { loading, error, data } = useQuery(PERSON_QUERY, {
-    variables: { name: personName },
+    variables: { name: search }, context: authLink,
   });
 
   if (loading) return <p>Loading...</p>;
@@ -46,7 +52,7 @@ const Person = ({ match: { params } }) => {
     vehicles,
     starships,
     url,
-  } = data.person;
+  } = data.personDetails;
 
   return (
     <div>
@@ -55,20 +61,29 @@ const Person = ({ match: { params } }) => {
         {name}
       </h1>
       <h4 className="mb-3">Person Details</h4>
-      <p>{height}</p>
-      <p>{gender}</p>
-      <p>{homeworld}</p>
+      <p>
+        Height:&nbsp;
+        {height}
+      </p>
+      <p>
+        Gender:&nbsp;
+        {gender}
+      </p>
+      <p>
+        Homeworld:&nbsp;
+        {homeworld}
+      </p>
       <ul className="list-group">
         <li className="list-group-item">
-          Eye color:
+          Eye color:&nbsp;
           {eyeColor}
         </li>
         <li className="list-group-item">
-          Hair color:
+          Hair color:&nbsp;
           {hairColor}
         </li>
         <li className="list-group-item">
-          Skin color:
+          Skin color:&nbsp;
           {skinColor}
         </li>
       </ul>
@@ -113,7 +128,7 @@ const Person = ({ match: { params } }) => {
 };
 
 Person.propTypes = {
-  match: PropTypes.objectOf(PropTypes.any).isRequired,
+  location: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default Person;
