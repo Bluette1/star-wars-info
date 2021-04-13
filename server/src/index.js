@@ -31,15 +31,13 @@ const server = new ApolloServer({
 });
 server.applyMiddleware({ app });
 
-if (process.env.NODE_ENV !== 'test') {
-  app.use(express.static('public'));
+app.use(express.static('public'));
 
-  app.use((_req, res) => {
-    res.status(200);
-    res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
-    res.end();
-  });
-}
+app.use((_req, res) => {
+  res.status(200);
+  res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
+  res.end();
+});
 
 const PORT = process.env.PORT || 4000;
 
