@@ -13,7 +13,7 @@ export default function PageInput() {
           min="1"
           max="82"
           className="ml-3"
-          placeholder="1"
+          placeholder={currentPage()}
         />
       </label>
       <input

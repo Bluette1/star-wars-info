@@ -11,6 +11,7 @@ This project is a wrapper information site for the official [stars wars API](htt
 - GraphQL
 - Nodejs
 
+[Live site](https://star-wars-data-app.herokuapp.com/)
 
 ## Description
 
