@@ -1,18 +1,17 @@
 import { InMemoryCache, makeVar } from '@apollo/client';
 
-console.log('token', localStorage.getItem('token'));
 export const isLoggedInVar = makeVar<boolean>(!!localStorage.getItem('token'));
 
 const getPage = () => {
   const page = localStorage.getItem('page');
-  let resultPg;
+  let resultPg = page;
   if (!page) {
-    resultPg = 1;
+    resultPg = '1';
   }
-  return makeVar <number>(resultPg);
+  return resultPg;
 };
 
-export const currentPage = getPage();
+export const currentPage = makeVar(getPage());
 
 export const cache: InMemoryCache = new InMemoryCache({
   typePolicies: {

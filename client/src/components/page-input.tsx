@@ -22,7 +22,8 @@ export default function PageInput() {
           const pageChosen = document.getElementById(
             'page-number',
           ) as HTMLInputElement;
-          currentPage(parseInt(pageChosen.value, 10));
+          localStorage.setItem('page', pageChosen.value as string);
+          currentPage(pageChosen.value);
         }}
         type="button"
         value="Submit"
