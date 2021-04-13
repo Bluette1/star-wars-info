@@ -1,7 +1,7 @@
 import React from 'react';
 import { useApolloClient } from '@apollo/client';
 
-import { isLoggedInVar } from './cache';
+import { isLoggedInVar } from '../cache';
 
 const LogoutButton = () => {
   const client = useApolloClient();

@@ -2,6 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { gql, useMutation } from '@apollo/client';
 import { isLoggedInVar } from '../cache';
+import LoginButton from './login-button';
 
 export const REGISTER_USER = gql`
   mutation Signup($email: String!, $password: String!, $name: String!) {
@@ -28,7 +29,7 @@ export default function RegisterForm() {
   if (error) return <p>An error occurred</p>;
 
   return (
-    <div className="row d-flex justify-content-center form mt-5 pb-5">
+    <div className="row m-md-0 m-5 d-flex justify-content-center form mt-5 pb-5">
       <div className="col-md-3">
         <h4 className="ml-n3">Register</h4>
 
@@ -53,6 +54,18 @@ export default function RegisterForm() {
                 type="password"
                 name="password"
                 id="password"
+              />
+            </label>
+            <label
+              htmlFor="password"
+              className="row d-flex flex-column mb-3 mt-3"
+            >
+              <p>Confirm password:</p>
+              <input
+                className="col-md-10"
+                type="password"
+                name="confirm-password"
+                id="confirm-password"
               />
             </label>
             <label htmlFor="name" className="row d-flex flex-column mb-3 mt-3">
@@ -85,6 +98,7 @@ export default function RegisterForm() {
             />
           </form>
         </>
+        <LoginButton />
       </div>
     </div>
   );

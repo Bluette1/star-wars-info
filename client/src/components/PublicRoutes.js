@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import LoginForm from './login-form';
 import RegisterForm from './register-form';
-import Header from '../Header';
+import Header from './Header';
 
 export class Routes extends Component {
   render() {

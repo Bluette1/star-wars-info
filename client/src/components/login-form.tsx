@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { useHistory } from 'react-router-dom';
 import { gql, useMutation } from '@apollo/client';
-import RegisterButton from '../register-button';
+import RegisterButton from './register-button';
 import { isLoggedInVar } from '../cache';
 
 export const LOGIN_USER = gql`
@@ -28,7 +28,7 @@ const LoginForm = () => {
   if (error) return <p>An error occurred</p>;
 
   return (
-    <div className="row d-flex justify-content-center form mt-5 pb-5">
+    <div className="row m-md-0 m-5 d-flex justify-content-center form mt-5 pb-5">
       <div className="col-md-3">
         <h4 className="ml-n3">Login</h4>
 

@@ -3,7 +3,7 @@ import { Route } from 'react-router-dom';
 import Me from './components/me';
 import People from './components/people';
 import Person from './components/person';
-import Header from './Header';
+import Header from './components/Header';
 
 export class Routes extends Component {
   render() {

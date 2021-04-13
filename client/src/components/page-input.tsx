@@ -11,7 +11,7 @@ export default function PageInput() {
           name="page-number"
           id="page-number"
           min="1"
-          max="82"
+          max="9"
           className="ml-3"
           placeholder={currentPage()}
         />
