@@ -24,7 +24,6 @@ query currentPage {
 const People = () => {
   const pageData = useQuery(CURR_PAGE);
   const { currPage } = pageData.data;
-  console.log('currPage', currPage);
   const { loading, error, data } = useQuery(
     PEOPLE_QUERY,
     { context: authLink, variables: { page: parseInt(currPage, 10) } },

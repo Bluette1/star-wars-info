@@ -4,9 +4,9 @@ export const isLoggedInVar = makeVar<boolean>(!!localStorage.getItem('token'));
 
 const getPage = () => {
   const page = localStorage.getItem('page');
-  let resultPg = page;
-  if (!page) {
-    resultPg = '1';
+  let resultPg = '1';
+  if (page) {
+    resultPg = page;
   }
   return resultPg;
 };
@@ -24,7 +24,7 @@ export const cache: InMemoryCache = new InMemoryCache({
         },
         currPage: {
           read() {
-            return currentPage;
+            return currentPage();
           },
         },
       },
