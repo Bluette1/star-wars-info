@@ -44,6 +44,17 @@ yarn server
   - [FULL STACK TUTORIAL](https://www.apollographql.com/docs/tutorial/)
   - [GraphQL With React & Apollo Series 1 - 4 ](https://www.youtube.com/watch?v=SEMTj8w04Z8)
 
+
+### Deployment
+#### Heroku
+
+- `cd client && npm run build-deploy`
+- `cd server` 
+- Initialize git heroku repo accorging to [instructions](https://devcenter.heroku.com/articles/deploying-nodejs)
+
+#### Loading the schema to heroku database
+- `heroku run npx prisma db push --preview-feature`
+
 ## 🤝 Contributing
 
 Contributions, issues and feature requests are welcome!
