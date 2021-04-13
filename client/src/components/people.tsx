@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import uuid from 'react-uuid';
 import Logout from '../logout-button';
+import PageInput from './page-input';
 import PersonItem from './person-item';
 import authLink from '../auth-link';
 
@@ -15,13 +16,19 @@ const PEOPLE_QUERY = gql`
     }
   }
 `;
-
+const CURR_PAGE = gql`
+query currentPage {
+  currPage @client
+}
+`;
 const People = () => {
+  const pageData = useQuery(CURR_PAGE);
+  const { currPage } = pageData.data;
+  console.log('CURR_PAGE', currPage);
   const { loading, error, data } = useQuery(
     PEOPLE_QUERY,
-    { context: authLink },
+    { context: authLink, variables: { page: currPage } },
   );
-
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{`Error :( ${error}`}</p>;
 
@@ -36,6 +43,7 @@ const People = () => {
         }}
       >
         <Logout />
+        <PageInput />
       </div>
       <h4 className="display-4 my-3">People</h4>
       <>
