@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
-import LoginForm from './login-form';
-import RegisterForm from './register-form';
-import Header from './Header';
+import LoginForm from './components/login-form';
+import RegisterForm from './components/register-form';
+import Header from './components/header';
 
 export class Routes extends Component {
   render() {

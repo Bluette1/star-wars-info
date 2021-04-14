@@ -9,8 +9,8 @@ import {
   gql,
   useQuery,
 } from '@apollo/client';
-import Routes from './Routes';
-import PublicRoutes from './components/PublicRoutes';
+import Routes from './routes';
+import PublicRoutes from './public-routes';
 import { cache } from './cache';
 
 const typeDefs = gql`
