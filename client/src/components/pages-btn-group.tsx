@@ -9,7 +9,7 @@ export default function PagesBtnGroup() {
         <button
           type="button"
           className="btn
-        btn-secondary hide-button"
+        btn-secondary"
           onClick={(e) => {
             e.preventDefault();
             currentPage(`${currPage - 1}`);
@@ -24,7 +24,7 @@ export default function PagesBtnGroup() {
       {currPage < 9 ? (
         <button
           type="button"
-          className="btn btn-secondary hide-button"
+          className="btn btn-secondary"
           onClick={(e) => {
             e.preventDefault();
             currentPage(`${currPage + 1}`);
