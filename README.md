@@ -44,6 +44,9 @@ yarn server
   - [FULL STACK TUTORIAL](https://www.apollographql.com/docs/tutorial/)
   - [GraphQL With React & Apollo Series 1 - 4 ](https://www.youtube.com/watch?v=SEMTj8w04Z8)
 
+- Icons
+  - [Seeklogo](https://seeklogo.com/vector-logo/367785/star-wars)
+  - [Icons8](https://icons8.com/icons/set/favourite)
 
 ### Deployment
 #### Heroku
