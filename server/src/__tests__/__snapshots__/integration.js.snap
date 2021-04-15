@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Queries fetches list of people 1`] = `
+Object {
+  "data": Object {
+    "people": Array [
+      Object {
+        "gender": "male",
+        "height": "172",
+        "homeworld": "http://swapi.dev/api/planets/1/",
+        "name": "Luke Skywalker",
+      },
+    ],
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Queries fetches single person by id 1`] = `
+Object {
+  "data": Object {
+    "person": Object {
+      "gender": "male",
+      "height": "172",
+      "homeworld": "http://swapi.dev/api/planets/1/",
+      "name": "Luke Skywalker",
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Queries fetches single person by name 1`] = `
+Object {
+  "data": Object {
+    "person": Object {
+      "gender": "male",
+      "height": "172",
+      "homeworld": "http://swapi.dev/api/planets/1/",
+      "name": "Luke Skywalker",
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
