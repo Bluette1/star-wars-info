@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from './star-wars-logo.svg';
-import '../css/Header.css';
+import '../css/header.css';
 
 function Header() {
   return (
