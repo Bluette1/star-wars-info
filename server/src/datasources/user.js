@@ -67,45 +67,6 @@ class UserAPI extends DataSource {
     return user;
   }
 
-  async addPerson({ personId: peopleId, name: personName }) {
-    const { userId } = this.context;
-    if (!userId) return {};
-    const personPosted = await this.store.person.create({
-      data: {
-        personId: peopleId,
-        name: personName,
-        postedBy: { connect: { id: userId } },
-      },
-    });
-    const {
-      id, personId, name, postedById,
-    } = personPosted;
-    return {
-      id,
-      personId,
-      name,
-      postedById,
-    };
-  }
-
-  async removePerson({ personId: peopleId, name: personName }) {
-    const { userId } = this.context;
-    const deletePerson = this.store.person.delete({
-      where: { personId: peopleId, name: personName, postedById: userId },
-    });
-
-    const {
-      id, personId, name, postedById,
-    } = deletePerson;
-
-    return {
-      id,
-      personId,
-      name,
-      postedById,
-    };
-  }
-
   async getPersonsByUser() {
     const { userId } = this.context;
     const user = await this.store.user.findUnique({

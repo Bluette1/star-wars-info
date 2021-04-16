@@ -2,7 +2,7 @@ const { RESTDataSource } = require('apollo-datasource-rest');
 
 const getPersonId = url => {
   const splitArray = url.split('/');
-  return parseInt(splitArray[0], 10);
+  return parseInt(splitArray[splitArray.length - 2], 10);
 };
 const personReducer = person => ({
   name: person.name,

@@ -46,14 +46,17 @@ module.exports = {
       return user;
     },
 
-    postPerson: async (_, { personId, name }, { dataSources }) => dataSources.userAPI.addPerson({
+    postPerson: async (
+      _, { personId, name }, { dataSources },
+    ) => dataSources.postedPersonApi.addPerson({
       name,
       personId,
     }),
 
     postPersonWithName: async (_, { name }, { dataSources }) => {
-      const user = dataSources.personAPI.getPersonByNameWithId({ name });
-      return dataSources.userAPI.addPerson({
+      const user = await dataSources.personAPI.getPersonByNameWithId({ name });
+      console.log('user', user);
+      return dataSources.postedPersonApi.addPerson({
         personId: user.id,
         name,
       });
@@ -61,7 +64,7 @@ module.exports = {
 
     deletePersonWithName: async (_, { name }, { dataSources }) => {
       const user = dataSources.personAPI.getPersonByNameWithId({ name });
-      return dataSources.userAPI.removePerson({
+      return dataSources.postedPersonApi.removePerson({
         personId: user.id,
         name,
       });
@@ -69,5 +72,12 @@ module.exports = {
   },
   User: {
     people: async (_, __, { dataSources }) => dataSources.userAPI.getPersonsByUser(),
+  },
+
+  PostedPerson: {
+    postedBy: async ({ id }, __, { dataSources }) => dataSources.postedPersonApi.postedBy({ id }),
+    postedById: async (
+      { id }, __, { dataSources },
+    ) => dataSources.postedPersonApi.postedById({ id }),
   },
 };

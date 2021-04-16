@@ -13,7 +13,7 @@ const typeDefs = gql`
     person(name: String, id: Int): Person
     personDetails(name: String, id: Int): PersonDetails
     me: User
-    myPeople: (): [PostPersonResponse]
+    myPeople: [PostPersonResponse]
   }
 
   type Mutation {
@@ -28,7 +28,7 @@ const typeDefs = gql`
     id: ID!
     name: String!
     email: String!
-    people: [Person]!
+    people: [PostedPerson]!
     token: String
   }
 
@@ -36,15 +36,17 @@ const typeDefs = gql`
     id: ID!
     personId: Int!
     name: String!
-    postedById: ID!
+    postedById: Int!
   }
 
-  # type DeletePersonResponse {
-  #   personId: Int!
-  #   name: String!
-  #   postedById: ID!
-  # }
-
+type PostedPerson {
+    id: ID!
+    personId: Int!
+    name: String!
+    postedBy: User
+    postedById: Int!
+}
+  
   type PersonWithId {
     name: String!
     height: String!

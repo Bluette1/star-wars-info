@@ -14,8 +14,8 @@ export const LOGIN_USER = gql`
   }
 `;
 export const MY_PEOPLE = gql`
-query MyPeople() {
-  myPeople() {
+query MyPeople {
+  myPeople {
   id
   personId
   name

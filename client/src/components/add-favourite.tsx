@@ -5,15 +5,15 @@ import heartgray from './heart-gray.png';
 import { favouritePeopleVar } from '../cache';
 
 const POST_PERSON = gql`
-    mutation PostPerson($name: String!) {
-      postPersonWithName(name: $name) {
-        id
-        personId
-        name
-        postedById
-      }
+  mutation PostPerson($name: String!) {
+    postPersonWithName(name: $name) {
+      id
+      personId
+      name
+      postedById
     }
-  `;
+  }
+`;
 
 export default function AddFavourite({ name }) {
   const [postPerson, { loading, error }] = useMutation(POST_PERSON, {
@@ -26,9 +26,17 @@ export default function AddFavourite({ name }) {
   if (loading) return <h4>Loading...</h4>;
   if (error) return <p>An error occurred</p>;
   return (
-    <div className="d-flex">
-      Like:
-      <img role="presentation" src={heartgray} alt="Like icon" onClick={() => { postPerson(); }} />
+    <div className="d-flex p-3">
+      Like:&nbsp;
+      <img
+        style={{ cursor: 'pointer' }}
+        role="presentation"
+        src={heartgray}
+        alt="Like icon"
+        onClick={() => {
+          postPerson({ variables: { name } });
+        }}
+      />
     </div>
   );
 }
