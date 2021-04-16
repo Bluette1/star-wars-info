@@ -1,5 +1,6 @@
 import React from 'react';
 import { gql, useMutation } from '@apollo/client';
+import PropTypes from 'prop-types';
 import heartred from './heart-red.png';
 import { favouritePeopleVar } from '../cache';
 
@@ -27,7 +28,11 @@ export default function RemoveFavourite({ name }) {
   return (
     <div className="d-flex">
       Like:
-      <img src={heartred} alt="Like icon" onClick={() => { deletePerson(); }} />
+      <img role="presentation" src={heartred} alt="Like icon" onClick={() => { deletePerson(); }} />
     </div>
   );
 }
+
+RemoveFavourite.propTypes = {
+  name: PropTypes.string.isRequired,
+};

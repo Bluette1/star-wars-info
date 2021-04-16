@@ -1,5 +1,6 @@
 import React from 'react';
 import { gql, useMutation } from '@apollo/client';
+import PropTypes from 'prop-types';
 import heartgray from './heart-gray.png';
 import { favouritePeopleVar } from '../cache';
 
@@ -27,7 +28,11 @@ export default function AddFavourite({ name }) {
   return (
     <div className="d-flex">
       Like:
-      <img src={heartgray} alt="Like icon" onClick={() => { postPerson(); }} />
+      <img role="presentation" src={heartgray} alt="Like icon" onClick={() => { postPerson(); }} />
     </div>
   );
 }
+
+AddFavourite.propTypes = {
+  name: PropTypes.string.isRequired,
+};

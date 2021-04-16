@@ -25,7 +25,7 @@ query MyPeople() {
 `;
 const LoginForm = () => {
   const history = useHistory();
-  const [mutation, { loading, error }] = useMutation(LOGIN_USER, {
+  const [mutation, { loading: inFlight, error: err }] = useMutation(LOGIN_USER, {
     onCompleted: ({ login }) => {
       if (login) {
         const {
@@ -49,11 +49,12 @@ const LoginForm = () => {
         isLoggedInVar(true);
         history.push('/');
       }
+      return {};
     },
   });
 
-  if (loading) return <h4>Loading...</h4>;
-  if (error) return <p>An error occurred</p>;
+  if (inFlight) return <h4>Loading...</h4>;
+  if (err) return <p>An error occurred</p>;
 
   return (
     <div className="row m-md-0 m-5 d-flex justify-content-center form mt-5 pb-5">
