@@ -13,6 +13,8 @@ const PersonItem = ({
 }) => {
   const favoritePeople = useReactiveVar(favouritePeopleVar);
   const isInFavourites = name ? favoritePeople.includes(name) : false;
+  const favourite = isInFavourites ? '&favourite=true' : '';
+
   return (
     <div className="card card-body mb-3">
       <div className="row d-flex">
@@ -43,7 +45,7 @@ const PersonItem = ({
             )}
           </div>
           <div>
-            <Link to={`/person/?search=${name}`} className="btn btn-secondary">
+            <Link to={`/person/?search=${name}${favourite}`} className="btn btn-secondary">
               Person Details
             </Link>
           </div>
