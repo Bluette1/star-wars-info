@@ -15,8 +15,8 @@ const PersonItem = ({
   const isInFavourites = name ? favoritePeople.includes(name) : false;
   return (
     <div className="card card-body mb-3">
-      <div className="row">
-        <div className="col-md-9">
+      <div className="row d-flex">
+        <div className="col-md-6">
           <h4>
             Name:&nbsp;
             <span>{name}</span>
@@ -33,6 +33,8 @@ const PersonItem = ({
             Homeworld:&nbsp;
             {homeworld}
           </p>
+        </div>
+        <div className="col-md-6 d-md-flex justify-content-md-between">
           <div>
             {isInFavourites ? (
               <RemoveFavourite name={name} />
@@ -40,7 +42,7 @@ const PersonItem = ({
               <AddFavourite name={name} />
             )}
           </div>
-          <div className="col-md-3">
+          <div>
             <Link to={`/person/?search=${name}`} className="btn btn-secondary">
               Person Details
             </Link>

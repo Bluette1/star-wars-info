@@ -99,7 +99,7 @@ const People = () => {
           <PersonItem key={`${person.name}-${uuid()}`} person={person} />
         ))}
       </>
-      <div style={{ textAlign: 'center' }}>
+      <div style={{ textAlign: 'center' }} className="mb-3">
         <PagesBtnGroup />
       </div>
     </>

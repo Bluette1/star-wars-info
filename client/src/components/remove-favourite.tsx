@@ -5,21 +5,23 @@ import heartred from './heart-red.png';
 import { favouritePeopleVar } from '../cache';
 
 const DELETE_PERSON = gql`
-    mutation deletePerson($name: String!) {
-      deletePersonWithName(name: $name) {
-        id
-        personId
-        name
-        postedById
-      }
+  mutation deletePerson($name: String!) {
+    deletePersonWithName(name: $name) {
+      id
+      personId
+      name
+      postedById
     }
-  `;
+  }
+`;
 
 export default function RemoveFavourite({ name }) {
   const [deletePerson, { loading, error }] = useMutation(DELETE_PERSON, {
     onCompleted: ({ deletePersonWithName }) => {
       if (deletePersonWithName) {
-        favouritePeopleVar(favouritePeopleVar().filter((currName) => currName !== name));
+        favouritePeopleVar(
+          favouritePeopleVar().filter((currName) => currName !== name),
+        );
       }
     },
   });
@@ -28,7 +30,15 @@ export default function RemoveFavourite({ name }) {
   return (
     <div className="d-flex">
       Unlike:&nbsp;
-      <img role="presentation" src={heartred} alt="Like icon" onClick={() => { deletePerson(); }} />
+      <img
+        className="mt-n2"
+        role="presentation"
+        src={heartred}
+        alt="Like icon"
+        onClick={() => {
+          deletePerson();
+        }}
+      />
     </div>
   );
 }

@@ -29,6 +29,7 @@ export default function AddFavourite({ name }) {
     <div className="d-flex p-3">
       Like:&nbsp;
       <img
+        className="mt-n2"
         style={{ cursor: 'pointer' }}
         role="presentation"
         src={heartgray}
