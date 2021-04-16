@@ -2,7 +2,7 @@ const UserAPI = require('./apis/user-api');
 
 class Favourite extends UserAPI {
   constructor({ store }) {
-    super(store);
+    super({ store });
   }
 
   async postedBy({ id }) {

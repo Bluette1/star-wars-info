@@ -1,9 +1,8 @@
 import React, { Fragment } from 'react';
 import { useHistory } from 'react-router-dom';
-import { gql, useMutation, useQuery } from '@apollo/client';
+import { gql, useMutation } from '@apollo/client';
 import RegisterButton from './register-button';
-import { isLoggedInVar, favouritePeopleVar } from '../cache';
-import authLink from '../auth-link';
+import { isLoggedInVar } from '../cache';
 
 export const LOGIN_USER = gql`
   mutation Login($email: String!, $password: String!) {
@@ -13,45 +12,22 @@ export const LOGIN_USER = gql`
     }
   }
 `;
-export const MY_PEOPLE = gql`
-query MyPeople {
-  myPeople {
-  id
-  personId
-  name
-  postedById
-  }
-}
-`;
+
 const LoginForm = () => {
   const history = useHistory();
-  const [mutation, { loading: inFlight, error: err }] = useMutation(LOGIN_USER, {
-    onCompleted: ({ login }) => {
-      if (login) {
-        const {
-          loading,
-          error,
-          data: { myPeople },
-        } = useQuery(MY_PEOPLE, { context: authLink });
-
-        if (loading) return <h4>Loading...</h4>;
-        if (error) return <p>An error occurred</p>;
-
-        const favouritePeople = [];
-        myPeople.map((person) => (
-          favouritePeople.push[person.name]
-        ));
-
-        favouritePeopleVar(favouritePeople);
-
-        localStorage.setItem('token', login.token as string);
-        localStorage.setItem('userId', login.id as string);
-        isLoggedInVar(true);
-        history.push('/');
-      }
-      return {};
+  const [mutation, { loading: inFlight, error: err }] = useMutation(
+    LOGIN_USER,
+    {
+      onCompleted: ({ login }) => {
+        if (login) {
+          localStorage.setItem('token', login.token as string);
+          localStorage.setItem('userId', login.id as string);
+          isLoggedInVar(true);
+          history.push('/');
+        }
+      },
     },
-  });
+  );
 
   if (inFlight) return <h4>Loading...</h4>;
   if (err) return <p>An error occurred</p>;

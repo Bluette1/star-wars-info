@@ -27,7 +27,7 @@ export default function RemoveFavourite({ name }) {
   if (error) return <p>An error occurred</p>;
   return (
     <div className="d-flex">
-      Like:&nbsp;
+      Unlike:&nbsp;
       <img role="presentation" src={heartred} alt="Like icon" onClick={() => { deletePerson(); }} />
     </div>
   );

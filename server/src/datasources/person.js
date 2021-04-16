@@ -1,4 +1,4 @@
-const PersonAPI = require('./apis/person-api');
+const PersonAPI = require('./apis/starwars-api');
 
 const getId = url => {
   const splitArray = url.split('/');

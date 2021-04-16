@@ -3,6 +3,7 @@ const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 const path = require('path');
 const { PrismaClient } = require('@prisma/client');
+const cors = require('cors');
 const typeDefs = require('./schema');
 const resolvers = require('./resolvers');
 const { getUserId } = require('./utils');
@@ -23,8 +24,10 @@ const dataSources = () => ({
   favourite: new Favourite({ store }),
 });
 
-// async function startApolloServer() {
 const app = express();
+
+// Allow cross-origin
+app.use(cors());
 const server = new ApolloServer({
   context,
   typeDefs,
