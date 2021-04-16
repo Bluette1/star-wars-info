@@ -6,9 +6,9 @@ const { PrismaClient } = require('@prisma/client');
 const typeDefs = require('./schema');
 const resolvers = require('./resolvers');
 const { getUserId } = require('./utils');
-const PersonAPI = require('./datasources/person');
-const UserAPI = require('./datasources/user');
-const PostedPersonAPI = require('./datasources/posted-person');
+const Person = require('./datasources/person');
+const User = require('./datasources/user');
+const Favourite = require('./datasources/favourite');
 
 const store = new PrismaClient();
 
@@ -18,9 +18,9 @@ const context = async ({ req }) => ({
 });
 
 const dataSources = () => ({
-  personAPI: new PersonAPI(),
-  userAPI: new UserAPI({ store }),
-  postedPersonApi: new PostedPersonAPI({ store }),
+  person: new Person(),
+  user: new User({ store }),
+  favourite: new Favourite({ store }),
 });
 
 // async function startApolloServer() {
@@ -58,8 +58,8 @@ module.exports = {
   typeDefs,
   resolvers,
   ApolloServer,
-  PersonAPI,
-  UserAPI,
+  Person,
+  User,
   store,
   server,
   app,

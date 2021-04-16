@@ -1,13 +1,8 @@
-const { DataSource } = require('apollo-datasource');
+const UserAPI = require('./apis/user-api');
 
-class PostedPersonAPI extends DataSource {
+class Favourite extends UserAPI {
   constructor({ store }) {
-    super();
-    this.store = store;
-  }
-
-  initialize(config) {
-    this.context = config.context;
+    super(store);
   }
 
   async postedBy({ id }) {
@@ -18,7 +13,7 @@ class PostedPersonAPI extends DataSource {
     return this.store.person.findUnique({ where: { id } }).postedById();
   }
 
-  async addPerson({ personId: peopleId, name: personName }) {
+  async add({ personId: peopleId, name: personName }) {
     const { userId } = this.context;
     if (!userId) return {};
     const personPosted = await this.store.person.create({
@@ -39,7 +34,7 @@ class PostedPersonAPI extends DataSource {
     };
   }
 
-  async removePerson({ personId: peopleId, name: personName }) {
+  async remove({ personId: peopleId, name: personName }) {
     const { userId } = this.context;
     const deletePerson = this.store.person.delete({
       where: { personId: peopleId, name: personName, postedById: userId },
@@ -58,4 +53,4 @@ class PostedPersonAPI extends DataSource {
   }
 }
 
-module.exports = PostedPersonAPI;
+module.exports = Favourite;

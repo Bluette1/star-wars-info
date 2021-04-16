@@ -1,4 +1,4 @@
-const UserAPI = require('../user');
+const User = require('../user');
 
 const mockStore = {
   user: {
@@ -13,19 +13,19 @@ const mockStore = {
 
 module.exports.mockStore = mockStore;
 
-const ds = new UserAPI({ store: mockStore });
+const ds = new User({ store: mockStore });
 ds.initialize({ context: { userId: 1 } });
 
-describe('[UserAPI.findUser]', () => {
+describe('[User.find]', () => {
   it('returns null for non-existent user', async () => {
     ds.initialize({ context: {} });
-    const res = await ds.findUser({ email: 'm@gmail!', password: 'password' });
+    const res = await ds.find({ email: 'm@gmail!', password: 'password' });
     mockStore.user.findUnique.mockReturnValueOnce(null);
     expect(res).toEqual(null);
   });
 
   it('returns user with token for existent user', async () => {
-    const res = await ds.findUser({ email: 'm@gmail!', password: 'password' });
+    const res = await ds.find({ email: 'm@gmail!', password: 'password' });
     mockStore.user.findUnique.mockReturnValueOnce(null);
     expect(res).toEqual(null);
   });
@@ -34,7 +34,7 @@ describe('[UserAPI.findUser]', () => {
     ds.initialize({ context: {} });
 
     mockStore.user.findUnique.mockReturnValueOnce({ id: 1, password: 'password' });
-    await ds.findUser({ email: 'a@a.a', password: 'password' });
+    await ds.find({ email: 'a@a.a', password: 'password' });
 
     expect(mockStore.user.findUnique).toBeCalledWith({
       where: { email: 'a@a.a' },
