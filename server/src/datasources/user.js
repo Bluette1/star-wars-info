@@ -88,11 +88,22 @@ class UserAPI extends DataSource {
     };
   }
 
-  async removePerson({ personId }) {
+  async removePerson({ personId: peopleId, name: personName }) {
     const { userId } = this.context;
-    return this.store.person.delete({
-      where: { personId, postedById: userId },
+    const deletePerson = this.store.person.delete({
+      where: { personId: peopleId, name: personName, postedById: userId },
     });
+
+    const {
+      id, personId, name, postedById,
+    } = deletePerson;
+
+    return {
+      id,
+      personId,
+      name,
+      postedById,
+    };
   }
 
   async getPersonsByUser() {

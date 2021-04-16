@@ -28,6 +28,8 @@ module.exports = {
     },
 
     me: (_, __, { dataSources }) => dataSources.userAPI.findUser(),
+
+    myPeople: async (_, __, { dataSources }) => dataSources.userAPI.getPersonsByUser(),
   },
   Mutation: {
     login: async (_, { email, password }, { dataSources }) => {
@@ -52,6 +54,14 @@ module.exports = {
     postPersonWithName: async (_, { name }, { dataSources }) => {
       const user = dataSources.personAPI.getPersonByNameWithId({ name });
       return dataSources.userAPI.addPerson({
+        personId: user.id,
+        name,
+      });
+    },
+
+    deletePersonWithName: async (_, { name }, { dataSources }) => {
+      const user = dataSources.personAPI.getPersonByNameWithId({ name });
+      return dataSources.userAPI.removePerson({
         personId: user.id,
         name,
       });

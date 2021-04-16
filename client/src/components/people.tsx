@@ -22,6 +22,7 @@ const CURR_PAGE = gql`
     currPage @client
   }
 `;
+
 const People = () => {
   const pageData = useQuery(CURR_PAGE);
   const { currPage } = pageData.data;

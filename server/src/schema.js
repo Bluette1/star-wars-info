@@ -13,11 +13,13 @@ const typeDefs = gql`
     person(name: String, id: Int): Person
     personDetails(name: String, id: Int): PersonDetails
     me: User
+    myPeople: (): [PostPersonResponse]
   }
 
   type Mutation {
     postPerson(name: String!, personId: Int!): PostPersonResponse!
     postPersonWithName(name: String!): PostPersonResponse!
+    deletePersonWithName(name: String!): PostPersonResponse!
     signup(email: String!, password: String!, name: String!): User
     login(email: String!, password: String!): User
   }
@@ -36,6 +38,12 @@ const typeDefs = gql`
     name: String!
     postedById: ID!
   }
+
+  # type DeletePersonResponse {
+  #   personId: Int!
+  #   name: String!
+  #   postedById: ID!
+  # }
 
   type PersonWithId {
     name: String!
