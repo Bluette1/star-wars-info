@@ -26,8 +26,8 @@ const CURR_PAGE = gql`
   }
 `;
 
-export const MY_PEOPLE = gql`
-  query MyPeople {
+export const MY_PEOPLE = `
+  query {
     myPeople {
       id
       personId
@@ -47,16 +47,7 @@ const fetchFavourites = async () => {
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
-      query: `
-      query {
-        myPeople {
-          id
-          personId
-          name
-          postedById
-        }
-      }
-    `,
+      query: MY_PEOPLE,
     }),
   });
 
@@ -64,8 +55,9 @@ const fetchFavourites = async () => {
   const {
     data: { myPeople },
   } = results;
-  const favouritePeople = [];
-  myPeople.map((person) => favouritePeople.push[person.name]);
+  console.log(myPeople);
+  const favouritePeople: string[] = [];
+  myPeople.forEach((person) => favouritePeople.push(person.name));
 
   favouritePeopleVar(favouritePeople);
   return results;
