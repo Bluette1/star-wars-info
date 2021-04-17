@@ -10,8 +10,9 @@ This project is a wrapper information site for the official [stars wars API](htt
 - Typescript
 - GraphQL
 - Nodejs
+- Prisma
 
-[Live site](https://star-wars-data-app.herokuapp.com/)
+[Live site](https://star-wars-data-app-fresh.herokuapp.com/)
 
 ## Description
 
