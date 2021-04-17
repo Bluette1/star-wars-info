@@ -7,10 +7,7 @@ import { favouritePeopleVar } from '../cache';
 const DELETE_PERSON = gql`
   mutation deletePerson($name: String!) {
     deletePersonWithName(name: $name) {
-      id
-      personId
       name
-      postedById
     }
   }
 `;
@@ -35,8 +32,9 @@ export default function RemoveFavourite({ name }) {
         role="presentation"
         src={heartred}
         alt="Like icon"
+        style={{ cursor: 'pointer' }}
         onClick={() => {
-          deletePerson();
+          deletePerson({ variables: { name } });
         }}
       />
     </div>
