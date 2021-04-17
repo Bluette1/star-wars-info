@@ -62,10 +62,9 @@ module.exports = {
     },
 
     deletePersonWithName: async (_, { name }, { dataSources }) => {
-      const user = dataSources.person.getByNameWithId({ name });
+      const person = await dataSources.person.getByNameWithId({ name });
       return dataSources.favourite.remove({
-        personId: user.id,
-        name,
+        personId: person.id,
       });
     },
   },

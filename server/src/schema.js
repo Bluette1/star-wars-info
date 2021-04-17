@@ -35,7 +35,7 @@ const typeDefs = gql`
   type PostPersonResponse {
     id: ID!
     personId: Int!
-    name: String!
+    name: String
     postedById: Int!
   }
 

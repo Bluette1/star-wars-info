@@ -34,10 +34,12 @@ class Favourite extends UserAPI {
     };
   }
 
-  async remove({ personId: peopleId, name: personName }) {
+  async remove({ personId: peopleId }) {
     const { userId } = this.context;
-    const deletePerson = this.store.person.delete({
-      where: { personId: peopleId, name: personName, postedById: userId },
+    const deletePerson = await this.store.person.delete({
+      where: {
+        favouriteId: { personId: peopleId, postedById: userId },
+      },
     });
 
     const {

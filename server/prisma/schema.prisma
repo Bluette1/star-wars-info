@@ -13,10 +13,12 @@ generator client {
 model Person {
   id         Int      @id @default(autoincrement())
   createdAt  DateTime @default(now())
-  personId   Int
+  personId   Int    
   name       String
   postedBy   User?    @relation(fields: [postedById], references: [id])
   postedById Int?
+
+@@unique(fields: [personId, postedById], name: "favouriteId")
 }
 
 model User {
