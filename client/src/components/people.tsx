@@ -26,8 +26,8 @@ const CURR_PAGE = gql`
   }
 `;
 
-export const MY_PEOPLE = `
-  query {
+export const MY_PEOPLE_QUERY = gql`
+  query MyPeople {
     myPeople {
       id
       personId
@@ -37,48 +37,38 @@ export const MY_PEOPLE = `
   }
 `;
 
-const fetchFavourites = async () => {
-  const token = localStorage.getItem('token');
-
-  const res = await fetch('/graphql', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
+const People = () => {
+  const pageData = useQuery(CURR_PAGE);
+  const { currPage } = pageData.data;
+  const {
+    loading: loadingPeopleQuery,
+    error: peopleQueryError,
+    data: peopleData,
+  } = useQuery(PEOPLE_QUERY, {
+    context: authLink,
+    variables: {
+      page: parseInt(currPage, 10),
     },
-    body: JSON.stringify({
-      query: MY_PEOPLE,
-    }),
+  });
+  if (loadingPeopleQuery) return <p>Loading...</p>;
+  if (peopleQueryError) return <p>{`Error :( ${peopleQueryError}`}</p>;
+  const { people } = peopleData;
+
+  const {
+    loading: loadingMyPeopleQuery,
+    error: myPeopleQueryError,
+    data: { myPeople },
+  } = useQuery(MY_PEOPLE_QUERY, {
+    context: authLink,
   });
 
-  const results = await res.json();
-  const {
-    data: { myPeople },
-  } = results;
-  console.log(myPeople);
+  if (loadingMyPeopleQuery) return <p>Loading...</p>;
+  if (myPeopleQueryError) return <p>{`Error :( ${peopleQueryError}`}</p>;
+
   const favouritePeople: string[] = [];
   myPeople.forEach((person) => favouritePeople.push(person.name));
 
   favouritePeopleVar(favouritePeople);
-  return results;
-};
-
-const People = () => {
-  const pageData = useQuery(CURR_PAGE);
-  const { currPage } = pageData.data;
-  const { loading, error, data } = useQuery(PEOPLE_QUERY, {
-    context: authLink,
-    variables: { page: parseInt(currPage, 10) },
-    onCompleted: ({ people }) => {
-      if (people) {
-        fetchFavourites().catch((err) => {
-          console.log('Error: ', err);
-        });
-      }
-    },
-  });
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{`Error :( ${error}`}</p>;
 
   return (
     <>
@@ -95,7 +85,7 @@ const People = () => {
       </div>
       <h4 className="display-4 my-3">People</h4>
       <>
-        {data.people.map((person) => (
+        {people.map((person) => (
           <PersonItem key={`${person.name}-${uuid()}`} person={person} />
         ))}
       </>
