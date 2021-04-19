@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import LinkItem from './link-item';
 import authLink from '../auth-link';
 import BackBtn from './back-btn';
+import Favourite from './favourite';
 
 const PERSON_QUERY = gql`
   query PersonDetails($name: String!) {
@@ -27,8 +28,12 @@ const PERSON_QUERY = gql`
 `;
 
 const Person = ({ location: searchParams }) => {
+  let isInFavourites = false;
   const parsedParams = QueryString.parse(searchParams.search);
-  const { search } = parsedParams;
+  const { search, favourite } = parsedParams;
+  if (favourite) {
+    isInFavourites = true;
+  }
 
   const { loading, error, data } = useQuery(PERSON_QUERY, {
     variables: { name: search },
@@ -54,13 +59,16 @@ const Person = ({ location: searchParams }) => {
   } = data.personDetails;
 
   return (
-    <div className="pt-5">
+    <div className="pt-5 mb-3">
       <BackBtn />
 
-      <h1 className="display-4 my-5">
-        <span className="text-dark">Name: </span>
-        {name}
-      </h1>
+      <div className="d-md-flex justify-content-md-between">
+        <h1 className="display-4 my-5">
+          <span className="text-dark">Name: </span>
+          {name}
+        </h1>
+        <div className="p-md-5">{isInFavourites ? <Favourite /> : null}</div>
+      </div>
       <h4 className="mb-3">Person Details</h4>
       <p>
         Height:&nbsp;

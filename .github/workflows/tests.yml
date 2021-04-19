@@ -5,9 +5,9 @@ name: Test with jest
 
 on:
   push:
-    branches: [ feature/add-star-wars-info ]
+    branches: [ feature/add-favourites-feature ]
   pull_request:
-    branches: [ feature/add-star-wars-info ]
+    branches: [ feature/add-favourites-feature ]
 
 jobs:
   build-server:

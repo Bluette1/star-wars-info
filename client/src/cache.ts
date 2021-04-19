@@ -1,6 +1,7 @@
 import { InMemoryCache, makeVar } from '@apollo/client';
 
 export const isLoggedInVar = makeVar<boolean>(!!localStorage.getItem('token'));
+export const favouritePeopleVar = makeVar<string[]>([]);
 
 const getPage = () => {
   const page = localStorage.getItem('page');
@@ -25,6 +26,11 @@ export const cache: InMemoryCache = new InMemoryCache({
         currPage: {
           read() {
             return currentPage();
+          },
+        },
+        favourites: {
+          read() {
+            return favouritePeopleVar();
           },
         },
       },

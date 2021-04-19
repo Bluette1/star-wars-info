@@ -10,8 +10,9 @@ This project is a wrapper information site for the official [stars wars API](htt
 - Typescript
 - GraphQL
 - Nodejs
+- Prisma
 
-[Live site](https://star-wars-data-app.herokuapp.com/)
+[Live site](https://star-wars-data-app-fresh.herokuapp.com/)
 
 ## Description
 
@@ -44,6 +45,9 @@ yarn server
   - [FULL STACK TUTORIAL](https://www.apollographql.com/docs/tutorial/)
   - [GraphQL With React & Apollo Series 1 - 4 ](https://www.youtube.com/watch?v=SEMTj8w04Z8)
 
+- Icons
+  - [Seeklogo](https://seeklogo.com/vector-logo/367785/star-wars)
+  - [Icons8](https://icons8.com/icons/set/favourite)
 
 ### Deployment
 #### Heroku
@@ -56,7 +60,6 @@ yarn server
 - `heroku run npx prisma db push --preview-feature`
 
 ## Potential Future Improvements / Ambitions
-- Add functionality for users to add their favourite people/persons
 - Integrate with more API's
 - Review and refurbish the styling
 - Add more code testing

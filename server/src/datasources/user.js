@@ -1,30 +1,14 @@
-const { DataSource } = require('apollo-datasource');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const UserAPI = require('./apis/user-api');
 const { APP_SECRET } = require('../utils');
 
-class UserAPI extends DataSource {
+class User extends UserAPI {
   constructor({ store }) {
-    super();
-    this.store = store;
+    super({ store });
   }
 
-  /**
-   * This is a function that gets called by ApolloServer when being setup.
-   * This function gets called with the datasource config including things
-   * like caches and context. We'll assign this.context to the request context
-   * here, so we can know about the user making requests
-   */
-  initialize(config) {
-    this.context = config.context;
-  }
-
-  /**
-   * User can be called with an argument that includes email, but it doesn't
-   * have to be. If the user is already on the context, it will use that user
-   * instead
-   */
-  async findUser({ email: emailArg, password: passwordArg } = {}) {
+  async find({ email: emailArg, password: passwordArg } = {}) {
     const loggedIn = !!(this.context && this.context.userId);
     let user;
     if (loggedIn) {
@@ -49,11 +33,7 @@ class UserAPI extends DataSource {
     return user;
   }
 
-  async createUser({
-    email: emailArg,
-    password: passwordArg,
-    name: nameArg,
-  } = {}) {
+  async create({ email: emailArg, password: passwordArg, name: nameArg } = {}) {
     const password = await bcrypt.hash(passwordArg, 10);
 
     const user = await this.store.user.create({
@@ -67,35 +47,7 @@ class UserAPI extends DataSource {
     return user;
   }
 
-  async addPerson({ personId: peopleId, name: personName }) {
-    const { userId } = this.context;
-    if (!userId) return {};
-    const personPosted = await this.store.person.create({
-      data: {
-        personId: peopleId,
-        name: personName,
-        postedBy: { connect: { id: userId } },
-      },
-    });
-    const {
-      id, personId, name, postedById,
-    } = personPosted;
-    return {
-      id,
-      personId,
-      name,
-      postedById,
-    };
-  }
-
-  async removePerson({ personId }) {
-    const { userId } = this.context;
-    return this.store.person.delete({
-      where: { personId, postedById: userId },
-    });
-  }
-
-  async getPersonsByUser() {
+  async getPersons() {
     const { userId } = this.context;
     const user = await this.store.user.findUnique({
       where: { id: userId },
@@ -106,4 +58,4 @@ class UserAPI extends DataSource {
   }
 }
 
-module.exports = UserAPI;
+module.exports = User;

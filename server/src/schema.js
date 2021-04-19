@@ -13,11 +13,13 @@ const typeDefs = gql`
     person(name: String, id: Int): Person
     personDetails(name: String, id: Int): PersonDetails
     me: User
+    myPeople: [PostPersonResponse]
   }
 
   type Mutation {
     postPerson(name: String!, personId: Int!): PostPersonResponse!
     postPersonWithName(name: String!): PostPersonResponse!
+    deletePersonWithName(name: String!): PostPersonResponse!
     signup(email: String!, password: String!, name: String!): User
     login(email: String!, password: String!): User
   }
@@ -26,17 +28,25 @@ const typeDefs = gql`
     id: ID!
     name: String!
     email: String!
-    people: [Person]!
+    people: [PostedPerson]!
     token: String
   }
 
   type PostPersonResponse {
     id: ID!
     personId: Int!
-    name: String!
-    postedById: ID!
+    name: String
+    postedById: Int!
   }
 
+type PostedPerson {
+    id: ID!
+    personId: Int!
+    name: String!
+    postedBy: User
+    postedById: Int!
+}
+  
   type PersonWithId {
     name: String!
     height: String!

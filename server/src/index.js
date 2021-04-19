@@ -3,11 +3,13 @@ const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 const path = require('path');
 const { PrismaClient } = require('@prisma/client');
+const cors = require('cors');
 const typeDefs = require('./schema');
 const resolvers = require('./resolvers');
 const { getUserId } = require('./utils');
-const PersonAPI = require('./datasources/person');
-const UserAPI = require('./datasources/user');
+const Person = require('./datasources/person');
+const User = require('./datasources/user');
+const Favourite = require('./datasources/favourite');
 
 const store = new PrismaClient();
 
@@ -17,12 +19,15 @@ const context = async ({ req }) => ({
 });
 
 const dataSources = () => ({
-  personAPI: new PersonAPI(),
-  userAPI: new UserAPI({ store }),
+  person: new Person(),
+  user: new User({ store }),
+  favourite: new Favourite({ store }),
 });
 
-// async function startApolloServer() {
 const app = express();
+
+// Allow cross-origin
+app.use(cors());
 const server = new ApolloServer({
   context,
   typeDefs,
@@ -56,8 +61,8 @@ module.exports = {
   typeDefs,
   resolvers,
   ApolloServer,
-  PersonAPI,
-  UserAPI,
+  Person,
+  User,
   store,
   server,
   app,

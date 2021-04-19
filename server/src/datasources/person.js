@@ -1,8 +1,8 @@
-const { RESTDataSource } = require('apollo-datasource-rest');
+const PersonAPI = require('./apis/starwars-api');
 
-const getPersonId = url => {
+const getId = url => {
   const splitArray = url.split('/');
-  return parseInt(splitArray[0], 10);
+  return parseInt(splitArray[splitArray.length - 2], 10);
 };
 const personReducer = person => ({
   name: person.name,
@@ -12,7 +12,7 @@ const personReducer = person => ({
 });
 
 const personWithIdReducer = person => ({
-  id: getPersonId(person.url),
+  id: getId(person.url),
   name: person.name,
   height: person.height,
   gender: person.gender,
@@ -34,48 +34,48 @@ const personDetailsReducer = person => ({
   url: person.url,
 });
 
-class PersonAPI extends RESTDataSource {
+class Person extends PersonAPI {
   constructor() {
     super();
-    this.baseURL = 'https://swapi.dev/api/';
     this.personReducer = personReducer;
     this.personWithIdReducer = personWithIdReducer;
+    this.personDetailsReducer = personDetailsReducer;
   }
 
-  async getAllPeople({ page }) {
+  async getAll({ page }) {
     const response = await this.get(`people/?page=${page}`);
     return Array.isArray(response.results)
       ? response.results.map(person => personReducer(person))
       : [];
   }
 
-  async getPersonById({ id }) {
+  async getById({ id }) {
     const response = await this.get(`people/${id}`);
     return personReducer(response);
   }
 
-  async getPersonByName({ name }) {
+  async getByName({ name }) {
     const params = encodeURIComponent(name);
     const response = await this.get(`people/?search=${params}`);
     return personReducer(response.results[0]);
   }
 
-  async getPersonByNameWithId({ name }) {
+  async getByNameWithId({ name }) {
     const params = encodeURIComponent(name);
     const response = await this.get(`people/?search=${params}`);
     return personWithIdReducer(response.results[0]);
   }
 
-  async getPersonDetailsByName({ name }) {
+  async getDetailsByName({ name }) {
     const params = encodeURIComponent(name);
     const response = await this.get(`people/?search=${params}`);
     return personDetailsReducer(response.results[0]);
   }
 
-  async getPersonDetailsById({ id }) {
+  async getDetailsById({ id }) {
     const response = await this.get(`people/${id}`);
     return personDetailsReducer(response);
   }
 }
 
-module.exports = PersonAPI;
+module.exports = Person;

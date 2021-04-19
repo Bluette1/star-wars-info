@@ -7,8 +7,8 @@ const {
   typeDefs,
   resolvers,
   ApolloServer,
-  PersonAPI,
-  UserAPI,
+  Person,
+  User,
   store,
 } = require('..');
 
@@ -16,17 +16,17 @@ const {
  * Integration testing utils
  */
 const constructTestServer = ({ context = defaultContext } = {}) => {
-  const userAPI = new UserAPI({ store });
-  const personAPI = new PersonAPI();
+  const user = new User({ store });
+  const person = new Person();
 
   const server = new ApolloServer({
     typeDefs,
     resolvers,
-    dataSources: () => ({ userAPI, personAPI }),
+    dataSources: () => ({ user, person }),
     context,
   });
 
-  return { server, userAPI, personAPI };
+  return { server, user, person };
 };
 
 module.exports.constructTestServer = constructTestServer;

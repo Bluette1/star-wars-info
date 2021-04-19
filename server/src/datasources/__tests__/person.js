@@ -1,4 +1,4 @@
-const PersonAPI = require('../person');
+const Person = require('../person');
 
 /**
  * There are mock Persons at the top of this file.
@@ -52,41 +52,41 @@ const mocks = {
   get: jest.fn(),
 };
 
-const ds = new PersonAPI();
+const ds = new Person();
 ds.get = mocks.get;
 
-describe('[PersonAPI.personReducer]', () => {
+describe('[Person.personReducer]', () => {
   it('properly transforms person', () => {
     expect(ds.personReducer(mockPersonResponse)).toEqual(mockPerson);
   });
 });
 
-describe('[PersonAPI.getAllPeople]', () => {
+describe('[Person.getAll]', () => {
   it('looks up people from api', async () => {
     // if api response is list of raw people,
     // res should be list of transformed people
     mocks.get.mockReturnValueOnce({ results: [mockPersonResponse] });
-    const res = await ds.getAllPeople({ page: 1 });
+    const res = await ds.getAll({ page: 1 });
 
     expect(res).toEqual([mockPerson]);
     expect(mocks.get).toBeCalledWith('people/?page=1');
   });
 });
 
-describe('[PersonAPI.getPersonByName]', () => {
+describe('[Person.getByName]', () => {
   it('should look up single person from api by name', async () => {
     mocks.get.mockReturnValueOnce({ results: [mockPersonResponse] });
-    const res = await ds.getPersonByName({ name: 'Luke Skywalker' });
+    const res = await ds.getByName({ name: 'Luke Skywalker' });
 
     expect(res).toEqual(mockPerson);
     expect(mocks.get).toBeCalledWith('people/?search=Luke%20Skywalker');
   });
 });
 
-describe('[PersonAPI.getPersonById]', () => {
+describe('[Person.getById]', () => {
   it('should look up single person from api by id', async () => {
     mocks.get.mockReturnValueOnce(mockPersonResponse);
-    const res = await ds.getPersonById({ id: 1 });
+    const res = await ds.getById({ id: 1 });
 
     expect(res).toEqual(mockPerson);
     expect(mocks.get).toBeCalledWith('people/1');
