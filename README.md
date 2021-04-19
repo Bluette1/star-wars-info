@@ -60,7 +60,6 @@ yarn server
 - `heroku run npx prisma db push --preview-feature`
 
 ## Potential Future Improvements / Ambitions
-- Add functionality for users to add their favourite people/persons
 - Integrate with more API's
 - Review and refurbish the styling
 - Add more code testing
