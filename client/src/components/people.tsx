@@ -78,8 +78,8 @@ const People = ({ peopleData, myPeopleData }) => {
         }}
       >
         <Logout />
-        <PageInput page={parseInt(currentPage(), 10)} callback={handlePageChange} />
-        <PagesBtnGroup page={parseInt(currentPage(), 10)} callback={handlePageChange} />
+        <PageInput page={parseInt(currentPage(), 10)} refetch={handlePageChange} />
+        <PagesBtnGroup page={parseInt(currentPage(), 10)} refetch={handlePageChange} />
       </div>
       <h4 className="display-4 my-3">People</h4>
       <>
@@ -88,7 +88,7 @@ const People = ({ peopleData, myPeopleData }) => {
         ))}
       </>
       <div style={{ textAlign: 'center' }} className="mb-3">
-        <PagesBtnGroup page={parseInt(currentPage(), 10)} callback={handlePageChange} />
+        <PagesBtnGroup page={parseInt(currentPage(), 10)} refetch={handlePageChange} />
       </div>
     </>
   );

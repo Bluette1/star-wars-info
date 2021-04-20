@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function PageInput({ page, callback }) {
+export default function PageInput({ page, refetch }) {
   return (
     <div className="pb-5 mt-5">
       <label htmlFor="page-number">
@@ -22,7 +22,7 @@ export default function PageInput({ page, callback }) {
           const pageChosen = document.getElementById(
             'page-number',
           ) as HTMLInputElement;
-          callback(pageChosen.value);
+          refetch(pageChosen.value);
         }}
         type="button"
         value="Submit"
@@ -33,5 +33,5 @@ export default function PageInput({ page, callback }) {
 
 PageInput.propTypes = {
   page: PropTypes.number.isRequired,
-  callback: PropTypes.func.isRequired,
+  refetch: PropTypes.func.isRequired,
 };
