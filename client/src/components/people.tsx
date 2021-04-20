@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react';
-import { gql } from '@apollo/client';
+import { gql, useReactiveVar } from '@apollo/client';
 import uuid from 'react-uuid';
 import { graphql } from '@apollo/client/react/hoc';
 import { compose } from 'recompose';
 import PropTypes from 'prop-types';
-import { favouritePeopleVar, currentPage } from '../cache';
+import { favouritePeopleVar, currentPage, peopleVar } from '../cache';
 import Logout from './logout-button';
 import PageInput from './page-input';
 import PersonItem from './person-item';
@@ -22,6 +22,12 @@ const PEOPLE_QUERY = gql`
   }
 `;
 
+// const PEOPLE_FETCHED = gql`
+//   query peopleVar {
+//     peopleCurrent @client
+//   }
+// `;
+
 export const MY_PEOPLE_QUERY = gql`
   query MyPeople {
     myPeople {
@@ -34,18 +40,41 @@ export const MY_PEOPLE_QUERY = gql`
 `;
 
 const People = ({ peopleData, myPeopleData }) => {
+  // const { data: { peopleCurrent } } = useQuery(PEOPLE_FETCHED);let refetchPeople;
+  let refetchPeople;
+  const handlePageChange = async (page) => {
+    localStorage.setItem('page', page as string);
+    currentPage(`${page}`);
+    const { data: people } = await refetchPeople({
+      variables: { page: currentPage() },
+    });
+    peopleVar(people);
+    window.location.reload();
+  };
+
+  const isFavourite = (name) => {
+    const favoritePeople = useReactiveVar(favouritePeopleVar);
+    const isInFavourites = name ? favoritePeople.includes(name) : false;
+    return isInFavourites;
+  };
+
   if (peopleData.error || myPeopleData.error) {
     return (<p>Error...</p>);
   }
   if (peopleData.loading || myPeopleData.loading) {
     return <p>Loading...</p>;
   }
-  const { people } = peopleData;
+
+  const { people, refetch } = peopleData;
+  refetchPeople = refetch;
+  peopleVar(people);
+
   const favouritePeople: string[] = [];
   const { myPeople } = myPeopleData;
   myPeople.forEach((person) => favouritePeople.push(person.name));
+  favouritePeopleVar([...favouritePeopleVar(), ...favouritePeople]);
+  const peopleCurrent = useReactiveVar(peopleVar);
 
-  favouritePeopleVar(favouritePeople);
   return (
     <>
       <div
@@ -56,17 +85,17 @@ const People = ({ peopleData, myPeopleData }) => {
         }}
       >
         <Logout />
-        <PageInput />
-        <PagesBtnGroup />
+        <PageInput page={parseInt(currentPage(), 10)} callback={handlePageChange} />
+        <PagesBtnGroup page={parseInt(currentPage(), 10)} callback={handlePageChange} />
       </div>
       <h4 className="display-4 my-3">People</h4>
       <>
-        {people.map((person) => (
-          <PersonItem key={`${person.name}-${uuid()}`} person={person} />
+        {peopleCurrent.map((person) => (
+          <PersonItem key={`${person.name}-${uuid()}`} person={person} isInFavourites={isFavourite(person.name)} />
         ))}
       </>
       <div style={{ textAlign: 'center' }} className="mb-3">
-        <PagesBtnGroup />
+        <PagesBtnGroup page={parseInt(currentPage(), 10)} callback={handlePageChange} />
       </div>
     </>
   );

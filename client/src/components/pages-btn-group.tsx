@@ -1,33 +1,32 @@
 import React from 'react';
-import { currentPage } from '../cache';
+import PropTypes from 'prop-types';
 
-export default function PagesBtnGroup() {
-  const currPage = parseInt(currentPage(), 10);
+export default function PagesBtnGroup({ page, callback }) {
   return (
     <div className="btn-group" role="group" aria-label="Basic example">
-      {currPage > 1 ? (
+      {page > 1 ? (
         <button
           type="button"
           className="btn
         btn-secondary"
           onClick={(e) => {
             e.preventDefault();
-            currentPage(`${currPage - 1}`);
+            callback(page - 1);
           }}
         >
           Prev
         </button>
       ) : null}
       <button type="button" className="btn btn-secondary">
-        {`${currPage}`}
+        {`${page}`}
       </button>
-      {currPage < 9 ? (
+      {page < 9 ? (
         <button
           type="button"
           className="btn btn-secondary"
           onClick={(e) => {
             e.preventDefault();
-            currentPage(`${currPage + 1}`);
+            callback(page + 1);
           }}
         >
           Next
@@ -36,3 +35,8 @@ export default function PagesBtnGroup() {
     </div>
   );
 }
+
+PagesBtnGroup.propTypes = {
+  page: PropTypes.number.isRequired,
+  callback: PropTypes.func.isRequired,
+};
