@@ -15,10 +15,10 @@ const PersonItem = ({
     <div className="card card-body mb-3">
       <div className="row d-flex">
         <div className="col-md-6">
-          <h6>
+          <p>
             Name:&nbsp;
             <span>{name}</span>
-          </h6>
+          </p>
           <p>
             Height:&nbsp;
             {height}

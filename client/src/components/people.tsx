@@ -22,12 +22,6 @@ const PEOPLE_QUERY = gql`
   }
 `;
 
-// const PEOPLE_FETCHED = gql`
-//   query peopleVar {
-//     peopleCurrent @client
-//   }
-// `;
-
 export const MY_PEOPLE_QUERY = gql`
   query MyPeople {
     myPeople {
@@ -40,7 +34,6 @@ export const MY_PEOPLE_QUERY = gql`
 `;
 
 const People = ({ peopleData, myPeopleData }) => {
-  // const { data: { peopleCurrent } } = useQuery(PEOPLE_FETCHED);let refetchPeople;
   let refetchPeople;
   const handlePageChange = async (page) => {
     localStorage.setItem('page', page as string);

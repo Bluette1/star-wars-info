@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const LinkItem = ({ link }) => (
-  <h6>
+  <p>
     {`<${link}>`}
-  </h6>
+  </p>
 );
 
 LinkItem.propTypes = {
