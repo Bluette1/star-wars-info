@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { gql, useReactiveVar } from '@apollo/client';
+import { gql } from '@apollo/client';
 import uuid from 'react-uuid';
 import { graphql } from '@apollo/client/react/hoc';
 import { compose } from 'recompose';
@@ -10,6 +10,8 @@ import PageInput from './page-input';
 import PersonItem from './person-item';
 import authLink from '../auth-link';
 import PagesBtnGroup from './pages-btn-group';
+import usePeopleContent from '../hooks/usePeopleContent';
+import useFavourites from '../hooks/useFavourites';
 
 const PEOPLE_QUERY = gql`
   query People($page: Int) {
@@ -22,18 +24,22 @@ const PEOPLE_QUERY = gql`
   }
 `;
 
-export const MY_PEOPLE_QUERY = gql`
+const MY_PEOPLE_QUERY = gql`
   query MyPeople {
     myPeople {
-      id
-      personId
       name
-      postedById
     }
   }
 `;
 
+const getPage = () => parseInt(currentPage(), 10);
+
 const People = ({ peopleData, myPeopleData }) => {
+  const { operations: { getPeople: allPeople, setPeople } } = usePeopleContent(peopleVar);
+  const {
+    operations: { getFavourites: favourites, setFavourites },
+  } = useFavourites(favouritePeopleVar);
+
   let refetchPeople;
   const handlePageChange = async (page) => {
     localStorage.setItem('page', page as string);
@@ -41,13 +47,12 @@ const People = ({ peopleData, myPeopleData }) => {
     const { data: people } = await refetchPeople({
       variables: { page: currentPage() },
     });
-    peopleVar(people);
+    setPeople(people);
     window.location.reload();
   };
 
   const isFavourite = (name) => {
-    const favoritePeople = useReactiveVar(favouritePeopleVar);
-    const isInFavourites = name ? favoritePeople.includes(name) : false;
+    const isInFavourites = name ? favourites.includes(name) : false;
     return isInFavourites;
   };
 
@@ -60,14 +65,12 @@ const People = ({ peopleData, myPeopleData }) => {
 
   const { people, refetch } = peopleData;
   refetchPeople = refetch;
-  peopleVar(people);
+  setPeople(people);
 
   const favouritePeople: string[] = [];
   const { myPeople } = myPeopleData;
   myPeople.forEach((person) => favouritePeople.push(person.name));
-  favouritePeopleVar([...favouritePeopleVar(), ...favouritePeople]);
-  const peopleCurrent = useReactiveVar(peopleVar);
-
+  setFavourites([...favouritePeopleVar(), ...favouritePeople]);
   return (
     <>
       <div
@@ -78,17 +81,17 @@ const People = ({ peopleData, myPeopleData }) => {
         }}
       >
         <Logout />
-        <PageInput page={parseInt(currentPage(), 10)} refetch={handlePageChange} />
-        <PagesBtnGroup page={parseInt(currentPage(), 10)} refetch={handlePageChange} />
+        <PageInput page={getPage()} refetch={handlePageChange} />
+        <PagesBtnGroup page={getPage()} refetch={handlePageChange} />
       </div>
       <h4 className="display-4 my-3">People</h4>
       <>
-        {peopleCurrent.map((person) => (
+        {allPeople.map((person) => (
           <PersonItem key={`${person.name}-${uuid()}`} person={person} isInFavourites={isFavourite(person.name)} />
         ))}
       </>
       <div style={{ textAlign: 'center' }} className="mb-3">
-        <PagesBtnGroup page={parseInt(currentPage(), 10)} refetch={handlePageChange} />
+        <PagesBtnGroup page={getPage()} refetch={handlePageChange} />
       </div>
     </>
   );
@@ -100,7 +103,7 @@ export default compose(
     options: {
       context: authLink,
       variables: {
-        page: parseInt(currentPage(), 10),
+        page: getPage(),
       },
     },
   }),
