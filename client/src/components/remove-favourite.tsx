@@ -3,6 +3,7 @@ import { gql, useMutation } from '@apollo/client';
 import PropTypes from 'prop-types';
 import heartred from './heart-red.png';
 import { favouritePeopleVar } from '../cache';
+import useFavourites from '../hooks/useFavourites';
 
 const DELETE_PERSON = gql`
   mutation deletePerson($name: String!) {
@@ -13,12 +14,14 @@ const DELETE_PERSON = gql`
 `;
 
 export default function RemoveFavourite({ name }) {
+  const {
+    deleteFavourite,
+  } = useFavourites(favouritePeopleVar);
+
   const [deletePerson, { loading, error }] = useMutation(DELETE_PERSON, {
     onCompleted: ({ deletePersonWithName }) => {
       if (deletePersonWithName) {
-        favouritePeopleVar(
-          favouritePeopleVar().filter((currName) => currName !== name),
-        );
+        deleteFavourite(name);
       }
     },
   });

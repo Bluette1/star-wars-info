@@ -35,9 +35,9 @@ const MY_PEOPLE_QUERY = gql`
 const getPage = () => parseInt(currentPage(), 10);
 
 const People = ({ peopleData, myPeopleData }) => {
-  const { operations: { getPeople: allPeople, setPeople } } = usePeopleContent(peopleVar);
+  const { getPeople: allPeople, setPeople } = usePeopleContent(peopleVar);
   const {
-    operations: { getFavourites: favourites, setFavourites },
+    getFavourites: favourites, setFavourites,
   } = useFavourites(favouritePeopleVar);
 
   let refetchPeople;
@@ -45,7 +45,7 @@ const People = ({ peopleData, myPeopleData }) => {
     localStorage.setItem('page', page as string);
     currentPage(`${page}`);
     const { data: people } = await refetchPeople({
-      variables: { page: currentPage() },
+      variables: { page: getPage() },
     });
     setPeople(people);
     window.location.reload();

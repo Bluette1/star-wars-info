@@ -6,6 +6,6 @@ export default function usePeopleContent(peopleVar: ReactiveVar<Person[]>) {
   const setPeople = (people) => { peopleVar(people); };
 
   return {
-    operations: { getPeople, setPeople },
+    getPeople, setPeople,
   };
 }
