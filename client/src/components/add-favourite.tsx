@@ -3,6 +3,7 @@ import { gql, useMutation } from '@apollo/client';
 import PropTypes from 'prop-types';
 import heartgray from './heart-gray.png';
 import { favouritePeopleVar } from '../cache';
+import useFavourites from '../hooks/useFavourites';
 
 const POST_PERSON = gql`
   mutation PostPerson($name: String!) {
@@ -16,10 +17,13 @@ const POST_PERSON = gql`
 `;
 
 export default function AddFavourite({ name }) {
+  const {
+    addFavourite,
+  } = useFavourites(favouritePeopleVar);
   const [postPerson, { loading, error }] = useMutation(POST_PERSON, {
     onCompleted: ({ postPersonWithName }) => {
       if (postPersonWithName) {
-        favouritePeopleVar([...favouritePeopleVar(), name]);
+        addFavourite(name);
       }
     },
   });

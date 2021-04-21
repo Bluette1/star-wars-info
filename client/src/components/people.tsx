@@ -1,14 +1,17 @@
 import React, { Fragment } from 'react';
-import { gql, useQuery } from '@apollo/client';
+import { gql } from '@apollo/client';
 import uuid from 'react-uuid';
-import { favouritePeopleVar } from '../cache';
+import { graphql } from '@apollo/client/react/hoc';
+import { compose } from 'recompose';
+import PropTypes from 'prop-types';
+import { favouritePeopleVar, currentPage, peopleVar } from '../cache';
 import Logout from './logout-button';
 import PageInput from './page-input';
 import PersonItem from './person-item';
 import authLink from '../auth-link';
 import PagesBtnGroup from './pages-btn-group';
-
-require('isomorphic-fetch');
+import usePeopleContent from '../hooks/usePeopleContent';
+import useFavourites from '../hooks/useFavourites';
 
 const PEOPLE_QUERY = gql`
   query People($page: Int) {
@@ -20,66 +23,54 @@ const PEOPLE_QUERY = gql`
     }
   }
 `;
-const CURR_PAGE = gql`
-  query currentPage {
-    currPage @client
-  }
-`;
 
-export const MY_PEOPLE = `
-  query {
+const MY_PEOPLE_QUERY = gql`
+  query MyPeople {
     myPeople {
-      id
-      personId
       name
-      postedById
     }
   }
 `;
 
-const fetchFavourites = async () => {
-  const token = localStorage.getItem('token');
+const getPage = () => parseInt(currentPage(), 10);
 
-  const res = await fetch('/graphql', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({
-      query: MY_PEOPLE,
-    }),
-  });
-
-  const results = await res.json();
+const People = ({ peopleData, myPeopleData }) => {
+  const { getPeople: allPeople, setPeople } = usePeopleContent(peopleVar);
   const {
-    data: { myPeople },
-  } = results;
-  console.log(myPeople);
+    getFavourites: favourites, setFavourites,
+  } = useFavourites(favouritePeopleVar);
+
+  let refetchPeople;
+  const handlePageChange = async (page) => {
+    localStorage.setItem('page', page as string);
+    currentPage(`${page}`);
+    const { data: people } = await refetchPeople({
+      variables: { page: getPage() },
+    });
+    setPeople(people);
+    window.location.reload();
+  };
+
+  const isFavourite = (name) => {
+    const isInFavourites = name ? favourites.includes(name) : false;
+    return isInFavourites;
+  };
+
+  if (peopleData.error || myPeopleData.error) {
+    return (<p>Error...</p>);
+  }
+  if (peopleData.loading || myPeopleData.loading) {
+    return <p>Loading...</p>;
+  }
+
+  const { people, refetch } = peopleData;
+  refetchPeople = refetch;
+  setPeople(people);
+
   const favouritePeople: string[] = [];
+  const { myPeople } = myPeopleData;
   myPeople.forEach((person) => favouritePeople.push(person.name));
-
-  favouritePeopleVar(favouritePeople);
-  return results;
-};
-
-const People = () => {
-  const pageData = useQuery(CURR_PAGE);
-  const { currPage } = pageData.data;
-  const { loading, error, data } = useQuery(PEOPLE_QUERY, {
-    context: authLink,
-    variables: { page: parseInt(currPage, 10) },
-    onCompleted: ({ people }) => {
-      if (people) {
-        fetchFavourites().catch((err) => {
-          console.log('Error: ', err);
-        });
-      }
-    },
-  });
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{`Error :( ${error}`}</p>;
-
+  setFavourites([...favouritePeopleVar(), ...favouritePeople]);
   return (
     <>
       <div
@@ -90,20 +81,41 @@ const People = () => {
         }}
       >
         <Logout />
-        <PageInput />
-        <PagesBtnGroup />
+        <PageInput page={getPage()} refetch={handlePageChange} />
+        <PagesBtnGroup page={getPage()} refetch={handlePageChange} />
       </div>
       <h4 className="display-4 my-3">People</h4>
       <>
-        {data.people.map((person) => (
-          <PersonItem key={`${person.name}-${uuid()}`} person={person} />
+        {allPeople.map((person) => (
+          <PersonItem key={`${person.name}-${uuid()}`} person={person} isInFavourites={isFavourite(person.name)} />
         ))}
       </>
       <div style={{ textAlign: 'center' }} className="mb-3">
-        <PagesBtnGroup />
+        <PagesBtnGroup page={getPage()} refetch={handlePageChange} />
       </div>
     </>
   );
 };
 
-export default People;
+export default compose(
+  graphql(PEOPLE_QUERY, {
+    name: 'peopleData',
+    options: {
+      context: authLink,
+      variables: {
+        page: getPage(),
+      },
+    },
+  }),
+  graphql(MY_PEOPLE_QUERY, {
+    name: 'myPeopleData',
+    options: {
+      context: authLink,
+    },
+  }),
+)(People);
+
+People.propTypes = {
+  peopleData: PropTypes.objectOf(PropTypes.any).isRequired,
+  myPeopleData: PropTypes.objectOf(PropTypes.any).isRequired,
+};
