@@ -118,4 +118,4 @@ export default compose(
 People.propTypes = {
   peopleData: PropTypes.objectOf(PropTypes.any).isRequired,
   myPeopleData: PropTypes.objectOf(PropTypes.any).isRequired,
-};
+}
