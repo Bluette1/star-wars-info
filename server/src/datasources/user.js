@@ -3,12 +3,17 @@ const jwt = require('jsonwebtoken');
 const UserAPI = require('./apis/user-api');
 const { APP_SECRET } = require('../utils');
 
-const retrieveToken = async (passwordArg, usr) => {
+const bcryptHash = async passwd => {
+  const password = await bcrypt.hash(passwd, 10);
+  return password;
+};
+
+const comparePasswords = async (passwordArg, usr) => {
+  const valid = await bcrypt.compare(passwordArg, usr.password);
+  return valid;
+};
+const retrieveToken = usr => {
   const user = usr;
-  const valid = await bcrypt.compare(passwordArg, user.password);
-  if (!valid) {
-    return null;
-  }
 
   const token = jwt.sign({ userId: user.id }, APP_SECRET);
 
@@ -20,6 +25,8 @@ class User extends UserAPI {
   constructor({ store }) {
     super({ store });
     this.retrieveToken = retrieveToken;
+    this.comparePasswords = comparePasswords;
+    this.bcryptHash = bcryptHash;
   }
 
   async find({ email: emailArg, password: passwordArg } = {}) {
@@ -35,21 +42,19 @@ class User extends UserAPI {
     if (!user) {
       return null;
     }
-    return this.retrieveToken(passwordArg, user);
+    const valid = this.comparePasswords(passwordArg, user);
+    if (!valid) {
+      return null;
+    }
+    return this.retrieveToken(user);
   }
 
   async create({ email: emailArg, password: passwordArg, name: nameArg } = {}) {
-    const password = await bcrypt.hash(passwordArg, 10);
-
+    const password = this.bcryptHash(passwordArg);
     const user = await this.store.user.create({
       data: { email: emailArg, password, name: nameArg },
     });
-
-    const token = jwt.sign({ userId: user.id }, APP_SECRET);
-
-    user.token = token;
-
-    return user;
+    return this.retrieveToken(user);
   }
 
   async getPersons() {
