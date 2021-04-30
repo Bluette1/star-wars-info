@@ -38,22 +38,11 @@ const People = ({
   page1, page2, page3, page4, page5, page6, page7, page8, page9,
   myPeopleData,
 }) => {
-  const { getPeople, setPeople } = usePeopleContent(peopleVar);
+  const { getPeople: allPeople, setPeople } = usePeopleContent(peopleVar);
   const {
     getFavourites: favourites, setFavourites,
   } = useFavourites(favouritePeopleVar);
 
-  const pageMap = {
-    1: 'page1',
-    2: 'page2',
-    3: 'page3',
-    4: 'page4',
-    5: 'page5',
-    6: 'page6',
-    7: 'page7',
-    8: 'page8',
-    9: 'page9',
-  };
   const handlePageChange = async (page) => {
     localStorage.setItem('page', page as string);
     currentPage(`${page}`);
@@ -106,8 +95,6 @@ const People = ({
 
   setPeople(allPages);
 
-  const allPeople = getPeople(pageMap[currentPage()]);
-
   const favouritePeople: string[] = [];
   const { myPeople } = myPeopleData;
   myPeople.forEach((person) => favouritePeople.push(person.name));
@@ -127,7 +114,7 @@ const People = ({
       </div>
       <h4 className="display-4 my-3">People</h4>
       <>
-        {allPeople.map((person) => (
+        {allPeople().map((person) => (
           <PersonItem key={`${person.name}-${uuid()}`} person={person} isInFavourites={isFavourite(person.name)} />
         ))}
       </>
