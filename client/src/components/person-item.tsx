@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import AddFavourite from './add-favourite';
-import RemoveFavourite from './remove-favourite';
+import FavouriteContainer from './favourite-container';
 
 const PersonItem = ({
   person: {
@@ -33,13 +32,7 @@ const PersonItem = ({
           </p>
         </div>
         <div className="col-md-6 d-md-flex justify-content-md-between">
-          <div>
-            {isInFavourites ? (
-              <RemoveFavourite name={name} />
-            ) : (
-              <AddFavourite name={name} />
-            )}
-          </div>
+          <FavouriteContainer isInFavourites={isInFavourites} name={name} />
           <div>
             <Link to={`/person/?search=${name}${favourite}`} className="btn btn-secondary">
               Person Details
