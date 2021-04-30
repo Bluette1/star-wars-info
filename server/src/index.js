@@ -33,7 +33,7 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   dataSources,
-  mocks: true,
+  // mocks: true,
 });
 server.applyMiddleware({ app });
 

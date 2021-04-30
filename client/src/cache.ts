@@ -1,8 +1,7 @@
 import { InMemoryCache, makeVar } from '@apollo/client';
-import Person from './Person';
 
 export const isLoggedInVar = makeVar<boolean>(!!localStorage.getItem('token'));
-export const peopleVar = makeVar<Person[]>([]);
+export const peopleVar = makeVar<Object>({});
 export const favouritePeopleVar = makeVar<string[]>([]);
 
 const getPage = () => {

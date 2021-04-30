@@ -34,20 +34,29 @@ const MY_PEOPLE_QUERY = gql`
 
 const getPage = () => parseInt(currentPage(), 10);
 
-const People = ({ peopleData, myPeopleData }) => {
-  const { getPeople: allPeople, setPeople } = usePeopleContent(peopleVar);
+const People = ({
+  page1, page2, page3, page4, page5, page6, page7, page8, page9,
+  myPeopleData,
+}) => {
+  const { getPeople, setPeople } = usePeopleContent(peopleVar);
   const {
     getFavourites: favourites, setFavourites,
   } = useFavourites(favouritePeopleVar);
 
-  let refetchPeople;
+  const pageMap = {
+    1: 'page1',
+    2: 'page2',
+    3: 'page3',
+    4: 'page4',
+    5: 'page5',
+    6: 'page6',
+    7: 'page7',
+    8: 'page8',
+    9: 'page9',
+  };
   const handlePageChange = async (page) => {
     localStorage.setItem('page', page as string);
     currentPage(`${page}`);
-    const { data: people } = await refetchPeople({
-      variables: { page: getPage() },
-    });
-    setPeople(people);
     window.location.reload();
   };
 
@@ -56,16 +65,48 @@ const People = ({ peopleData, myPeopleData }) => {
     return isInFavourites;
   };
 
-  if (peopleData.error || myPeopleData.error) {
+  if (
+    page1.error
+     || page2.error
+     || page3.error
+     || page4.error
+     || page5.error
+     || page6.error
+     || page7.error
+     || page8.error
+     || page9.error
+      || myPeopleData.error) {
     return (<p>Error...</p>);
   }
-  if (peopleData.loading || myPeopleData.loading) {
+  if (
+    page1.loading
+    || page2.loading
+    || page3.loading
+    || page4.loading
+    || page5.loading
+    || page6.loading
+    || page7.loading
+    || page8.loading
+    || page9.loading
+    || myPeopleData.loading) {
     return <p>Loading...</p>;
   }
 
-  const { people, refetch } = peopleData;
-  refetchPeople = refetch;
-  setPeople(people);
+  const allPages = {
+    page1: page1.people,
+    page2: page2.people,
+    page3: page3.people,
+    page4: page4.people,
+    page5: page5.people,
+    page6: page6.people,
+    page7: page7.people,
+    page8: page8.people,
+    page9: page9.people,
+  };
+
+  setPeople(allPages);
+
+  const allPeople = getPeople(pageMap[currentPage()]);
 
   const favouritePeople: string[] = [];
   const { myPeople } = myPeopleData;
@@ -81,8 +122,8 @@ const People = ({ peopleData, myPeopleData }) => {
         }}
       >
         <Logout />
-        <PageInput page={getPage()} refetch={handlePageChange} />
-        <PagesBtnGroup page={getPage()} refetch={handlePageChange} />
+        <PageInput page={getPage()} getPage={handlePageChange} />
+        <PagesBtnGroup page={getPage()} getPage={handlePageChange} />
       </div>
       <h4 className="display-4 my-3">People</h4>
       <>
@@ -91,7 +132,7 @@ const People = ({ peopleData, myPeopleData }) => {
         ))}
       </>
       <div style={{ textAlign: 'center' }} className="mb-3">
-        <PagesBtnGroup page={getPage()} refetch={handlePageChange} />
+        <PagesBtnGroup page={getPage()} getPage={handlePageChange} />
       </div>
     </>
   );
@@ -99,11 +140,83 @@ const People = ({ peopleData, myPeopleData }) => {
 
 export default compose(
   graphql(PEOPLE_QUERY, {
-    name: 'peopleData',
+    name: 'page1',
     options: {
       context: authLink,
       variables: {
-        page: getPage(),
+        page: 1,
+      },
+    },
+  }),
+  graphql(PEOPLE_QUERY, {
+    name: 'page2',
+    options: {
+      context: authLink,
+      variables: {
+        page: 2,
+      },
+    },
+  }),
+  graphql(PEOPLE_QUERY, {
+    name: 'page3',
+    options: {
+      context: authLink,
+      variables: {
+        page: 3,
+      },
+    },
+  }),
+  graphql(PEOPLE_QUERY, {
+    name: 'page4',
+    options: {
+      context: authLink,
+      variables: {
+        page: 4,
+      },
+    },
+  }),
+  graphql(PEOPLE_QUERY, {
+    name: 'page5',
+    options: {
+      context: authLink,
+      variables: {
+        page: 5,
+      },
+    },
+  }),
+  graphql(PEOPLE_QUERY, {
+    name: 'page6',
+    options: {
+      context: authLink,
+      variables: {
+        page: 6,
+      },
+    },
+  }),
+  graphql(PEOPLE_QUERY, {
+    name: 'page7',
+    options: {
+      context: authLink,
+      variables: {
+        page: 7,
+      },
+    },
+  }),
+  graphql(PEOPLE_QUERY, {
+    name: 'page8',
+    options: {
+      context: authLink,
+      variables: {
+        page: 8,
+      },
+    },
+  }),
+  graphql(PEOPLE_QUERY, {
+    name: 'page9',
+    options: {
+      context: authLink,
+      variables: {
+        page: 9,
       },
     },
   }),
@@ -116,6 +229,14 @@ export default compose(
 )(People);
 
 People.propTypes = {
-  peopleData: PropTypes.objectOf(PropTypes.any).isRequired,
+  page1: PropTypes.objectOf(PropTypes.any).isRequired,
+  page2: PropTypes.objectOf(PropTypes.any).isRequired,
+  page3: PropTypes.objectOf(PropTypes.any).isRequired,
+  page4: PropTypes.objectOf(PropTypes.any).isRequired,
+  page5: PropTypes.objectOf(PropTypes.any).isRequired,
+  page6: PropTypes.objectOf(PropTypes.any).isRequired,
+  page7: PropTypes.objectOf(PropTypes.any).isRequired,
+  page8: PropTypes.objectOf(PropTypes.any).isRequired,
+  page9: PropTypes.objectOf(PropTypes.any).isRequired,
   myPeopleData: PropTypes.objectOf(PropTypes.any).isRequired,
 };
