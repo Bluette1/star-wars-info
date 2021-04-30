@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { gql } from '@apollo/client';
 import uuid from 'react-uuid';
 import { graphql } from '@apollo/client/react/hoc';
@@ -38,22 +38,6 @@ const People = ({
   page1, page2, page3, page4, page5, page6, page7, page8, page9,
   myPeopleData,
 }) => {
-  const { getPeople: allPeople, setPeople } = usePeopleContent(peopleVar);
-  const {
-    getFavourites: favourites, setFavourites,
-  } = useFavourites(favouritePeopleVar);
-
-  const handlePageChange = async (page) => {
-    localStorage.setItem('page', page as string);
-    currentPage(`${page}`);
-    window.location.reload();
-  };
-
-  const isFavourite = (name) => {
-    const isInFavourites = name ? favourites.includes(name) : false;
-    return isInFavourites;
-  };
-
   if (
     page1.error
      || page2.error
@@ -80,6 +64,24 @@ const People = ({
     || myPeopleData.loading) {
     return <p>Loading...</p>;
   }
+  const { getPeople, setPeople } = usePeopleContent(peopleVar);
+  const [page, setPage] = useState(getPeople());
+
+  const {
+    getFavourites: favourites, setFavourites,
+  } = useFavourites(favouritePeopleVar);
+
+  const handlePageChange = async (pge) => {
+    localStorage.setItem('page', pge as string);
+    currentPage(`${pge}`);
+    setPage(getPeople());
+    // window.location.reload();
+  };
+
+  const isFavourite = (name) => {
+    const isInFavourites = name ? favourites.includes(name) : false;
+    return isInFavourites;
+  };
 
   const allPages = {
     1: page1.people,
@@ -99,6 +101,7 @@ const People = ({
   const { myPeople } = myPeopleData;
   myPeople.forEach((person) => favouritePeople.push(person.name));
   setFavourites([...favouritePeopleVar(), ...favouritePeople]);
+
   return (
     <>
       <div
@@ -114,7 +117,7 @@ const People = ({
       </div>
       <h4 className="display-4 my-3">People</h4>
       <>
-        {allPeople().map((person) => (
+        {page.map((person) => (
           <PersonItem key={`${person.name}-${uuid()}`} person={person} isInFavourites={isFavourite(person.name)} />
         ))}
       </>
