@@ -82,15 +82,15 @@ const People = ({
   }
 
   const allPages = {
-    page1: page1.people,
-    page2: page2.people,
-    page3: page3.people,
-    page4: page4.people,
-    page5: page5.people,
-    page6: page6.people,
-    page7: page7.people,
-    page8: page8.people,
-    page9: page9.people,
+    1: page1.people,
+    2: page2.people,
+    3: page3.people,
+    4: page4.people,
+    5: page5.people,
+    6: page6.people,
+    7: page7.people,
+    8: page8.people,
+    9: page9.people,
   };
 
   setPeople(allPages);
