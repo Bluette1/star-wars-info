@@ -13,7 +13,7 @@ const LogoutButton = () => {
       className="btn btn-secondary p-2"
       onClick={() => {
         client.cache.evict({ fieldName: 'me' });
-        client.cache.gc();
+        client.resetStore();
 
         // Remove user details from localStorage.
         localStorage.removeItem('token');
