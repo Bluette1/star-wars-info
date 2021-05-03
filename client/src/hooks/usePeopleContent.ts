@@ -1,8 +1,15 @@
 import { ReactiveVar } from '@apollo/client';
-import Person from '../Person';
+import { currentPage } from '../cache';
 
-export default function usePeopleContent(peopleVar: ReactiveVar<Person[]>) {
-  const getPeople = peopleVar();
+export default function usePeopleContent(peopleVar: ReactiveVar<Object>) {
+  const getPeople = () => {
+    const currPge = currentPage();
+    const all = peopleVar();
+    if (all[parseInt(currPge, 10)]) {
+      return all[parseInt(currPge, 10)];
+    }
+    return [];
+  };
   const setPeople = (people) => { peopleVar(people); };
 
   return {

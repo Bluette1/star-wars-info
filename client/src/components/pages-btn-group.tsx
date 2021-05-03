@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function PagesBtnGroup({ page, refetch }) {
+export default function PagesBtnGroup({ page, getPage }) {
   return (
     <div className="btn-group" role="group" aria-label="Basic example">
       {page > 1 ? (
@@ -11,7 +11,7 @@ export default function PagesBtnGroup({ page, refetch }) {
         btn-secondary"
           onClick={(e) => {
             e.preventDefault();
-            refetch(page - 1);
+            getPage(page - 1);
           }}
         >
           Prev
@@ -26,7 +26,7 @@ export default function PagesBtnGroup({ page, refetch }) {
           className="btn btn-secondary"
           onClick={(e) => {
             e.preventDefault();
-            refetch(page + 1);
+            getPage(page + 1);
           }}
         >
           Next
@@ -38,5 +38,5 @@ export default function PagesBtnGroup({ page, refetch }) {
 
 PagesBtnGroup.propTypes = {
   page: PropTypes.number.isRequired,
-  refetch: PropTypes.func.isRequired,
+  getPage: PropTypes.func.isRequired,
 };
