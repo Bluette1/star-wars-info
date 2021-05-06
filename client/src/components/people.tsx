@@ -57,10 +57,7 @@ const People = ({
 
   if (err()) {
     window.location.reload();
-    setTimeout(() => {
-      if (err()) { return (<p>Error...Please try again</p>); }
-      return null;
-    }, 3000);
+    if (err()) { return (<p>Error...Please try again</p>); }
   }
   if (
     page1.loading
