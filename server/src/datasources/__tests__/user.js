@@ -119,7 +119,7 @@ describe('[User.find]', () => {
     const ds = new User({ store: mockStore });
     const retrieveTokenSpy = jest.fn();
     const bcryptHashSpy = jest.fn();
-    const passwordCrypt = 'crypt password';
+    const passwordCrypt = await Promise.resolve('crypt password');
     const userWithToken = { ...user, token };
     bcryptHashSpy.mockReturnValueOnce(passwordCrypt);
     retrieveTokenSpy.mockReturnValueOnce(userWithToken);

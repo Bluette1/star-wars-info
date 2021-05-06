@@ -1,7 +1,9 @@
 import React from 'react';
 import { useApolloClient } from '@apollo/client';
 
-import { isLoggedInVar } from '../cache';
+import {
+  isLoggedInVar,
+} from '../cache';
 
 const LogoutButton = () => {
   const client = useApolloClient();
@@ -17,8 +19,10 @@ const LogoutButton = () => {
 
         // Remove user details from localStorage.
         localStorage.removeItem('token');
+        localStorage.removeItem('page');
         localStorage.removeItem('userId');
         isLoggedInVar(false);
+        window.location.reload();
       }}
     >
       Logout

@@ -13,6 +13,7 @@ This project is a wrapper information site for the official [stars wars API](htt
 - Prisma
 
 [Live site](https://star-wars-data-app-fresh.herokuapp.com/)
+[Revised Live site](https://starwars-app-revised.herokuapp.com/)
 
 ## Description
 

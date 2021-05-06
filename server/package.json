@@ -10,8 +10,10 @@
     "server": "node 'src/index.js'",
     "test": "jest",
     "client": "npm start --prefix ../client",
-    "build": "npm build-deploy --prefix ../client",
     "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "engines": {
+    "node": "14.x"
   },
   "keywords": [],
   "author": "",

@@ -50,7 +50,7 @@ class User extends UserAPI {
   }
 
   async create({ email: emailArg, password: passwordArg, name: nameArg } = {}) {
-    const password = this.bcryptHash(passwordArg);
+    const password = await this.bcryptHash(passwordArg);
     const user = await this.store.user.create({
       data: { email: emailArg, password, name: nameArg },
     });
