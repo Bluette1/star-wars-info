@@ -38,18 +38,26 @@ const People = ({
   page1, page2, page3, page4, page5, page6, page7, page8, page9,
   myPeopleData,
 }) => {
-  if (
-    page1.error
-     || page2.error
-     || page3.error
-     || page4.error
-     || page5.error
-     || page6.error
-     || page7.error
-     || page8.error
-     || page9.error
-      || myPeopleData.error) {
-    return (<p>Error...</p>);
+  let error = false;
+  const err = () => {
+    if (page1.error
+      || page2.error
+      || page3.error
+      || page4.error
+      || page5.error
+      || page6.error
+      || page7.error
+      || page8.error
+      || page9.error
+       || myPeopleData.error) {
+      error = true;
+    }
+    return error;
+  };
+
+  if (err()) {
+    window.location.reload();
+    if (err()) { return (<p>Error...Please try again</p>); }
   }
   if (
     page1.loading
@@ -65,18 +73,10 @@ const People = ({
     return <p>Loading...</p>;
   }
   const { getPeople, setPeople } = usePeopleContent(peopleVar);
-  const [page, setPage] = useState(getPeople());
 
   const {
     getFavourites: favourites, setFavourites,
   } = useFavourites(favouritePeopleVar);
-
-  const handlePageChange = async (pge) => {
-    localStorage.setItem('page', pge as string);
-    currentPage(`${pge}`);
-    setPage(getPeople());
-    // window.location.reload();
-  };
 
   const isFavourite = (name) => {
     const isInFavourites = name ? favourites.includes(name) : false;
@@ -96,6 +96,12 @@ const People = ({
   };
 
   setPeople(allPages);
+  const [page, setPage] = useState(getPeople());
+  const handlePageChange = async (pge) => {
+    localStorage.setItem('page', pge as string);
+    currentPage(`${pge}`);
+    setPage(getPeople());
+  };
 
   const favouritePeople: string[] = [];
   const { myPeople } = myPeopleData;
@@ -117,9 +123,9 @@ const People = ({
       </div>
       <h4 className="display-4 my-3">People</h4>
       <>
-        {page.map((person) => (
+        {page.length > 0 ? page.map((person) => (
           <PersonItem key={`${person.name}-${uuid()}`} person={person} isInFavourites={isFavourite(person.name)} />
-        ))}
+        )) : null}
       </>
       <div style={{ textAlign: 'center' }} className="mb-3">
         <PagesBtnGroup page={getPage()} getPage={handlePageChange} />
