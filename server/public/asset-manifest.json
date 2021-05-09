@@ -1,21 +1,21 @@
 {
   "files": {
     "main.css": "/static/css/main.441c2f72.chunk.css",
-    "main.js": "/static/js/main.fd87a67c.chunk.js",
-    "main.js.map": "/static/js/main.fd87a67c.chunk.js.map",
+    "main.js": "/static/js/main.c969efff.chunk.js",
+    "main.js.map": "/static/js/main.c969efff.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.03887cff.js",
     "runtime-main.js.map": "/static/js/runtime-main.03887cff.js.map",
-    "static/js/2.a98c90ed.chunk.js": "/static/js/2.a98c90ed.chunk.js",
-    "static/js/2.a98c90ed.chunk.js.map": "/static/js/2.a98c90ed.chunk.js.map",
+    "static/js/2.c1158c03.chunk.js": "/static/js/2.c1158c03.chunk.js",
+    "static/js/2.c1158c03.chunk.js.map": "/static/js/2.c1158c03.chunk.js.map",
     "index.html": "/index.html",
     "static/css/main.441c2f72.chunk.css.map": "/static/css/main.441c2f72.chunk.css.map",
-    "static/js/2.a98c90ed.chunk.js.LICENSE.txt": "/static/js/2.a98c90ed.chunk.js.LICENSE.txt",
+    "static/js/2.c1158c03.chunk.js.LICENSE.txt": "/static/js/2.c1158c03.chunk.js.LICENSE.txt",
     "static/media/star-wars-logo.057103d6.svg": "/static/media/star-wars-logo.057103d6.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.03887cff.js",
-    "static/js/2.a98c90ed.chunk.js",
+    "static/js/2.c1158c03.chunk.js",
     "static/css/main.441c2f72.chunk.css",
-    "static/js/main.fd87a67c.chunk.js"
+    "static/js/main.c969efff.chunk.js"
   ]
 }

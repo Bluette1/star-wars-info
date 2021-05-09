@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, useHistory } from 'react-router-dom';
-// import  { Redirect } from 'react-router-dom'
 import './css/index.css';
 import {
   ApolloClient,
