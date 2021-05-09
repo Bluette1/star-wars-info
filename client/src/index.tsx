@@ -43,7 +43,6 @@ const IS_LOGGED_IN = gql`
 function IsLoggedIn() {
   const { data } = useQuery(IS_LOGGED_IN);
   const history = useHistory();
-  // return data.isLoggedIn ? <Routes /> : <Redirect to="/login" />;
   let content;
   if (data.isLoggedIn) {
     history.push('/');
@@ -53,7 +52,6 @@ function IsLoggedIn() {
     content = <PublicRoutes />;
   }
   return content;
-  // return data.isLoggedIn ? <Routes /> : <PublicRoutes />;
 }
 
 ReactDOM.render(
