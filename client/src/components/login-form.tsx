@@ -24,6 +24,7 @@ const LoginForm = () => {
           localStorage.setItem('userId', login.id as string);
           isLoggedInVar(true);
           history.push('/');
+          window.location.reload();
         }
       },
     },

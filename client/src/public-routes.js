@@ -10,7 +10,7 @@ export class Routes extends Component {
       <div>
         <Header />
         <Route exact path="/register" component={RegisterForm} />
-        <Route exact path="/" component={LoginForm} />
+        {/* <Route exact path="/" component={LoginForm} /> */}
         <Route exact path="/login" component={LoginForm} />
       </div>
     );
