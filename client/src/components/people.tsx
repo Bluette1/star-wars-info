@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 import { gql } from '@apollo/client';
 import uuid from 'react-uuid';
 import { graphql } from '@apollo/client/react/hoc';
@@ -44,7 +44,6 @@ const People = ({
     || myPeopleData.loading) {
     return <p>Loading...</p>;
   }
-  const { getPeople, setPeople } = usePeopleContent(peopleVar);
 
   const {
     getFavourites: favourites, setFavourites,
@@ -54,21 +53,21 @@ const People = ({
     const isInFavourites = name ? favourites.includes(name) : false;
     return isInFavourites;
   };
+  const { getPeople, setPeople } = usePeopleContent(peopleVar);
 
   setPeople(pageData.people);
-  const [page, setPage] = useState(getPeople);
   const handleRefetch = async (pge) => {
     const { data: people } = await pageData.refetch({
       variables: { pge },
     });
     setPeople(people);
+    window.location.reload();
   };
 
   const handlePageChange = async (pge) => {
     localStorage.setItem('page', pge as string);
     currentPage(`${pge}`);
     handleRefetch(pge);
-    setPage(getPeople);
   };
 
   const favouritePeople: string[] = [];
@@ -91,9 +90,9 @@ const People = ({
       </div>
       <h4 className="display-4 my-3">People</h4>
       <>
-        {page.length > 0 ? page.map((person) => (
+        {getPeople().map((person) => (
           <PersonItem key={`${person.name}-${uuid()}`} person={person} isInFavourites={isFavourite(person.name)} />
-        )) : null}
+        ))}
       </>
       <div style={{ textAlign: 'center' }} className="mb-3">
         <PagesBtnGroup page={getPage()} getPage={handlePageChange} />
