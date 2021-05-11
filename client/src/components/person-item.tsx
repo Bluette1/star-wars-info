@@ -1,14 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import FavouriteContainer from './favourite-container';
+import useFavourites from '../hooks/useFavourites';
+import { favouritePeopleVar } from '../cache';
 
 const PersonItem = ({
   person: {
     name, height, gender, homeworld,
-  }, isInFavourites,
+  },
 }) => {
-  const favourite = isInFavourites ? '&favourite=true' : '';
+  const {
+    isFavourite: isInFavourites,
+  } = useFavourites(favouritePeopleVar);
+  const favourite = () => (isInFavourites(name) ? '&favourite=true' : '');
+  const [favouriteState, setFavouriteState] = useState(favourite());
+  const [isInFavouritesState, setIsInFavouritesState] = useState(isInFavourites(name));
+
+  const handleFavouriteChange = () => {
+    setIsInFavouritesState(!isInFavouritesState);
+    setFavouriteState(favourite());
+  };
 
   return (
     <div className="card card-body mb-3">
@@ -32,9 +44,13 @@ const PersonItem = ({
           </p>
         </div>
         <div className="col-md-6 d-md-flex justify-content-md-between">
-          <FavouriteContainer isInFavourites={isInFavourites} name={name} />
+          <FavouriteContainer
+            handleFavouriteChange={handleFavouriteChange}
+            isInFavourites={isInFavouritesState}
+            name={name}
+          />
           <div>
-            <Link to={`/person/?search=${name}${favourite}`} className="btn btn-secondary">
+            <Link to={`/person/?search=${name}${favouriteState}`} className="btn btn-secondary">
               Person Details
             </Link>
           </div>
@@ -46,7 +62,6 @@ const PersonItem = ({
 
 PersonItem.propTypes = {
   person: PropTypes.objectOf(PropTypes.any).isRequired,
-  isInFavourites: PropTypes.bool.isRequired,
 };
 
 export default PersonItem;

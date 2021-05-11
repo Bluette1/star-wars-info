@@ -11,18 +11,17 @@ const getPage = () => {
   return resultPg;
 };
 
-const createStorage = (varName) => {
+const retrieveStorage = (varName) => {
   let people;
   const peopleObj = localStorage.getItem(varName);
   if (peopleObj) {
-    console.log('var', peopleObj);
     people = JSON.parse(peopleObj);
   }
   return people;
 };
 
-export const peopleVar = makeVar(createStorage('peopleData') || {});
-export const favouritePeopleVar = makeVar(createStorage('favourites') || []);
+export const peopleVar = makeVar(retrieveStorage('peopleData') || {});
+export const favouritePeopleVar = makeVar(retrieveStorage('favourites') || []);
 
 export const currentPage = makeVar(getPage());
 

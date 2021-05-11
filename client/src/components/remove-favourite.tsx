@@ -13,7 +13,7 @@ const DELETE_PERSON = gql`
   }
 `;
 
-export default function RemoveFavourite({ name }) {
+export default function RemoveFavourite({ name, handleFavouriteChange }) {
   const {
     deleteFavourite,
   } = useFavourites(favouritePeopleVar);
@@ -38,6 +38,7 @@ export default function RemoveFavourite({ name }) {
         style={{ cursor: 'pointer' }}
         onClick={() => {
           deletePerson({ variables: { name } });
+          handleFavouriteChange();
         }}
       />
     </div>
@@ -46,4 +47,5 @@ export default function RemoveFavourite({ name }) {
 
 RemoveFavourite.propTypes = {
   name: PropTypes.string.isRequired,
+  handleFavouriteChange: PropTypes.func.isRequired,
 };
