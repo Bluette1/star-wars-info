@@ -1,9 +1,6 @@
 import { InMemoryCache, makeVar } from '@apollo/client';
-import Person from './Person';
 
 export const isLoggedInVar = makeVar<boolean>(!!localStorage.getItem('token'));
-export const peopleVar = makeVar<Person[]>([]);
-export const favouritePeopleVar = makeVar<string[]>([]);
 
 const getPage = () => {
   const page = localStorage.getItem('page');
@@ -13,6 +10,19 @@ const getPage = () => {
   }
   return resultPg;
 };
+
+const createStorage = (varName) => {
+  let people;
+  const peopleObj = localStorage.getItem(varName);
+  if (peopleObj) {
+    console.log('var', peopleObj);
+    people = JSON.parse(peopleObj);
+  }
+  return people;
+};
+
+export const peopleVar = makeVar(createStorage('peopleData') || {});
+export const favouritePeopleVar = makeVar(createStorage('favourites') || []);
 
 export const currentPage = makeVar(getPage());
 

@@ -1,15 +1,11 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { gql } from '@apollo/client';
-import uuid from 'react-uuid';
 import { graphql } from '@apollo/client/react/hoc';
 import { compose } from 'recompose';
 import PropTypes from 'prop-types';
-import { favouritePeopleVar, currentPage, peopleVar } from '../cache';
-import Logout from './logout-button';
-import PageInput from './page-input';
-import PersonItem from './person-item';
+import { favouritePeopleVar, peopleVar } from '../cache';
+import Page from './page';
 import authLink from '../auth-link';
-import PagesBtnGroup from './pages-btn-group';
 import usePeopleContent from '../hooks/usePeopleContent';
 import useFavourites from '../hooks/useFavourites';
 
@@ -32,8 +28,6 @@ const MY_PEOPLE_QUERY = gql`
   }
 `;
 
-const getPage = () => parseInt(currentPage(), 10);
-
 const People = ({
   pageData,
   myPeopleData,
@@ -49,55 +43,21 @@ const People = ({
     getFavourites: favourites, setFavourites,
   } = useFavourites(favouritePeopleVar);
 
-  const isFavourite = (name) => {
-    const isInFavourites = name ? favourites.includes(name) : false;
-    return isInFavourites;
-  };
   const { getPeople, setPeople } = usePeopleContent(peopleVar);
 
-  setPeople(pageData.people);
-  const handleRefetch = async (pge) => {
-    const { data: people } = await pageData.refetch({
-      variables: { pge },
-    });
-    setPeople(people);
-    window.location.reload();
-  };
-
-  const handlePageChange = async (pge) => {
-    localStorage.setItem('page', pge as string);
-    currentPage(`${pge}`);
-    handleRefetch(pge);
-  };
+  setPeople(1, pageData.people);
 
   const favouritePeople: string[] = [];
   const { myPeople } = myPeopleData;
   myPeople.forEach((person) => favouritePeople.push(person.name));
   setFavourites([...favouritePeopleVar(), ...favouritePeople]);
-
   return (
-    <>
-      <div
-        style={{
-          padding: '5px',
-          textAlign: 'center',
-          borderRadius: '50%',
-        }}
-      >
-        <Logout />
-        <PageInput page={getPage()} getPage={handlePageChange} />
-        <PagesBtnGroup page={getPage()} getPage={handlePageChange} />
-      </div>
-      <h4 className="display-4 my-3">People</h4>
-      <>
-        {getPeople().map((person) => (
-          <PersonItem key={`${person.name}-${uuid()}`} person={person} isInFavourites={isFavourite(person.name)} />
-        ))}
-      </>
-      <div style={{ textAlign: 'center' }} className="mb-3">
-        <PagesBtnGroup page={getPage()} getPage={handlePageChange} />
-      </div>
-    </>
+    <Page
+      favourites={favourites}
+      refetch={pageData.refetch}
+      setPeople={setPeople}
+      getPeople={getPeople}
+    />
   );
 };
 

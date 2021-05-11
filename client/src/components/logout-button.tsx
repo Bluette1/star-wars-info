@@ -23,6 +23,8 @@ const LogoutButton = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('page');
         localStorage.removeItem('userId');
+        localStorage.removeItem('peopleData');
+        localStorage.removeItem('favourites');
         isLoggedInVar(false);
         history.push('/login');
         window.location.reload();
