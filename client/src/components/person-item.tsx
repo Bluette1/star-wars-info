@@ -13,13 +13,14 @@ const PersonItem = ({
   const {
     isFavourite: isInFavourites,
   } = useFavourites(favouritePeopleVar);
-  const favourite = () => (isInFavourites(name) ? '&favourite=true' : '');
-  const [favouriteState, setFavouriteState] = useState(favourite());
   const [isInFavouritesState, setIsInFavouritesState] = useState(isInFavourites(name));
+
+  // const favourite = () => (isInFavouritesState ? '&favourite=true' : '');
+  // const [favouriteState, setFavouriteState] = useState(favourite());
 
   const handleFavouriteChange = () => {
     setIsInFavouritesState(!isInFavouritesState);
-    setFavouriteState(favourite());
+    // setFavouriteState(favourite());
   };
 
   return (
@@ -50,9 +51,16 @@ const PersonItem = ({
             name={name}
           />
           <div>
-            <Link to={`/person/?search=${name}${favouriteState}`} className="btn btn-secondary">
-              Person Details
-            </Link>
+            {isInFavouritesState
+              ? (
+                <Link to={`/person/?search=${name}&favourite=true`} className="btn btn-secondary">
+                  Person Details
+                </Link>
+              ) : (
+                <Link to={`/person/?search=${name}`} className="btn btn-secondary">
+                  Person Details
+                </Link>
+              )}
           </div>
         </div>
       </div>
