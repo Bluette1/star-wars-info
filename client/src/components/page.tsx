@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { currentPage } from '../cache';
-import PageComponent from './pageComponent';
+import PageComponent from './page-component';
 
 const getPage = () => parseInt(currentPage(), 10);
 export default function Page({
-  favourites, getPeople, setPeople, refetch,
+  getPeople, setPeople, refetch,
 }) {
   const [page, setPage] = useState(getPeople());
   const handleRefetch = async () => {
@@ -25,11 +25,10 @@ export default function Page({
       handleRefetch();
     } else { setPage(getPeople()); }
   };
-  return <PageComponent favourites={favourites} page={page} handlePageChange={handlePageChange} />;
+  return <PageComponent page={page} handlePageChange={handlePageChange} />;
 }
 
 Page.propTypes = {
-  favourites: PropTypes.arrayOf(PropTypes.string).isRequired,
   getPeople: PropTypes.func.isRequired,
   setPeople: PropTypes.func.isRequired,
   refetch: PropTypes.func.isRequired,

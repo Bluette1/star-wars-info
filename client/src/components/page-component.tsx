@@ -10,11 +10,7 @@ import Logout from './logout-button';
 
 const getPage = () => parseInt(currentPage(), 10);
 
-export default function PageComponent({ page, handlePageChange, favourites }) {
-  const isFavourite = (name) => {
-    const isInFavourites = name ? favourites.includes(name) : false;
-    return isInFavourites;
-  };
+export default function PageComponent({ page, handlePageChange }) {
   return (
     <>
       <div
@@ -31,7 +27,7 @@ export default function PageComponent({ page, handlePageChange, favourites }) {
       <h4 className="display-4 my-3">People</h4>
       <>
         {page.map((person) => (
-          <PersonItem key={`${person.name}-${uuid()}`} person={person} isInFavourites={isFavourite(person.name)} />
+          <PersonItem key={`${person.name}-${uuid()}`} person={person} />
         ))}
       </>
       <div style={{ textAlign: 'center' }} className="mb-3">
@@ -43,6 +39,5 @@ export default function PageComponent({ page, handlePageChange, favourites }) {
 
 PageComponent.propTypes = {
   page: PropTypes.arrayOf(PropTypes.object).isRequired,
-  favourites: PropTypes.arrayOf(PropTypes.string).isRequired,
   handlePageChange: PropTypes.func.isRequired,
 };

@@ -40,7 +40,7 @@ const People = ({
   }
 
   const {
-    getFavourites: favourites, setFavourites,
+    setFavourites,
   } = useFavourites(favouritePeopleVar);
 
   const { getPeople, setPeople } = usePeopleContent(peopleVar);
@@ -50,10 +50,9 @@ const People = ({
   const favouritePeople: string[] = [];
   const { myPeople } = myPeopleData;
   myPeople.forEach((person) => favouritePeople.push(person.name));
-  setFavourites([...favouritePeopleVar(), ...favouritePeople]);
+  setFavourites(favouritePeople);
   return (
     <Page
-      favourites={favourites}
       refetch={pageData.refetch}
       setPeople={setPeople}
       getPeople={getPeople}

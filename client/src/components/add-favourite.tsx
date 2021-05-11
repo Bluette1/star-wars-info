@@ -16,7 +16,7 @@ const POST_PERSON = gql`
   }
 `;
 
-export default function AddFavourite({ name }) {
+export default function AddFavourite({ name, handleFavouriteChange }) {
   const {
     addFavourite,
   } = useFavourites(favouritePeopleVar);
@@ -40,6 +40,7 @@ export default function AddFavourite({ name }) {
         alt="Like icon"
         onClick={() => {
           postPerson({ variables: { name } });
+          handleFavouriteChange();
         }}
       />
     </div>
@@ -48,4 +49,5 @@ export default function AddFavourite({ name }) {
 
 AddFavourite.propTypes = {
   name: PropTypes.string.isRequired,
+  handleFavouriteChange: PropTypes.func.isRequired,
 };

@@ -41,6 +41,12 @@
       { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
     ],
     "import/no-named-as-default": 1,
-    "react/prefer-stateless-function":1
-  }
+    "react/prefer-stateless-function":1,
+    "no-console": 1
+  },
+  "ignorePatterns": [
+    "dist/",
+    "build/",
+    "public/"
+  ]
 }

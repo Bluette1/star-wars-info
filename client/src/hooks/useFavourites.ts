@@ -1,22 +1,27 @@
-import { ReactiveVar, useReactiveVar } from '@apollo/client';
+import { ReactiveVar } from '@apollo/client';
 
 export default function useFavourites(favouritePeopleVar: ReactiveVar<string[]>) {
-  const getFavourites = useReactiveVar(favouritePeopleVar);
+  const getFavourites = favouritePeopleVar();
   const setFavourites = (favourites) => {
-    localStorage.setItem('favourites', JSON.stringify(favourites) as string);
+    localStorage.setItem('favourites', JSON.stringify([...favouritePeopleVar(), ...favourites]) as string);
     favouritePeopleVar(favourites);
   };
   const deleteFavourite = (name) => {
-    const favourites = getFavourites.filter((currName) => currName !== name);
+    const favourites = favouritePeopleVar().filter((currName) => currName !== name);
     localStorage.setItem('favourites', JSON.stringify(favourites) as string);
-    setFavourites(favourites);
+    favouritePeopleVar(favourites);
   };
   const addFavourite = (name) => {
-    const favourites = [...getFavourites, name];
+    const favourites = [...favouritePeopleVar(), name];
     localStorage.setItem('favourites', JSON.stringify(favourites) as string);
-    setFavourites(favourites);
+
+    favouritePeopleVar(favourites);
+  };
+  const isFavourite = (name) => {
+    const isInFavourites = name ? favouritePeopleVar().includes(name) : false;
+    return isInFavourites;
   };
   return {
-    getFavourites, setFavourites, deleteFavourite, addFavourite,
+    getFavourites, setFavourites, deleteFavourite, addFavourite, isFavourite,
   };
 }

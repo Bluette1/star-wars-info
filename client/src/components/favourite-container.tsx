@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import AddFavourite from './add-favourite';
 import RemoveFavourite from './remove-favourite';
 
-export default function FavouriteContainer({ isInFavourites, name }) {
+export default function FavouriteContainer({
+  isInFavourites, name, handleFavouriteChange,
+}) {
   return (
     <div>
       {isInFavourites ? (
-        <RemoveFavourite name={name} />
+        <RemoveFavourite name={name} handleFavouriteChange={handleFavouriteChange} />
       ) : (
-        <AddFavourite name={name} />
+        <AddFavourite name={name} handleFavouriteChange={handleFavouriteChange} />
       )}
     </div>
   );
@@ -18,4 +20,5 @@ export default function FavouriteContainer({ isInFavourites, name }) {
 FavouriteContainer.propTypes = {
   name: PropTypes.string.isRequired,
   isInFavourites: PropTypes.bool.isRequired,
+  handleFavouriteChange: PropTypes.func.isRequired,
 };
