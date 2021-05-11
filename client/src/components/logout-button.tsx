@@ -26,7 +26,7 @@ const LogoutButton = () => {
         localStorage.removeItem('peopleData');
         localStorage.removeItem('favourites');
         isLoggedInVar(false);
-        history.push('/login');
+        history.push('/');
         window.location.reload();
       }}
     >
