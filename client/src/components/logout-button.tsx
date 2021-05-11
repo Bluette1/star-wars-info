@@ -1,11 +1,13 @@
 import React from 'react';
 import { useApolloClient } from '@apollo/client';
+import { useHistory } from 'react-router-dom';
 
 import {
   isLoggedInVar,
 } from '../cache';
 
 const LogoutButton = () => {
+  const history = useHistory();
   const client = useApolloClient();
   return (
     <button
@@ -21,7 +23,10 @@ const LogoutButton = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('page');
         localStorage.removeItem('userId');
+        localStorage.removeItem('peopleData');
+        localStorage.removeItem('favourites');
         isLoggedInVar(false);
+        history.push('/');
         window.location.reload();
       }}
     >

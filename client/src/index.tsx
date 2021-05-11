@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, useHistory } from 'react-router-dom';
 import './css/index.css';
 import {
   ApolloClient,
@@ -41,7 +41,16 @@ const IS_LOGGED_IN = gql`
 
 function IsLoggedIn() {
   const { data } = useQuery(IS_LOGGED_IN);
-  return data.isLoggedIn ? <Routes /> : <PublicRoutes />;
+  const history = useHistory();
+  let content;
+  if (data.isLoggedIn) {
+    history.push('/');
+    content = <Routes />;
+  } else {
+    history.push('/login');
+    content = <PublicRoutes />;
+  }
+  return content;
 }
 
 ReactDOM.render(

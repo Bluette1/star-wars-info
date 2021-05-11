@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function PagesBtnGroup({ page, getPage }) {
+export default function PagesBtnGroup({ pg, getPage }) {
+  const page = pg;
   return (
     <div className="btn-group" role="group" aria-label="Basic example">
       {page > 1 ? (
@@ -37,6 +38,6 @@ export default function PagesBtnGroup({ page, getPage }) {
 }
 
 PagesBtnGroup.propTypes = {
-  page: PropTypes.number.isRequired,
+  pg: PropTypes.number.isRequired,
   getPage: PropTypes.func.isRequired,
 };

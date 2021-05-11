@@ -3,15 +3,19 @@ import { currentPage } from '../cache';
 
 export default function usePeopleContent(peopleVar: ReactiveVar<Object>) {
   const getPeople = () => {
-    const currPge = currentPage();
-    const all = peopleVar();
-    if (all[parseInt(currPge, 10)]) {
-      return all[parseInt(currPge, 10)];
+    const currPg = parseInt(currentPage(), 10);
+    const people = peopleVar();
+    if (people[currPg]) {
+      return people[currPg];
     }
     return [];
   };
-  const setPeople = (people) => { peopleVar(people); };
-
+  const setPeople = (pge, people) => {
+    const currPeople = peopleVar();
+    currPeople[pge] = people;
+    localStorage.setItem('peopleData', JSON.stringify(currPeople) as string);
+    peopleVar(currPeople);
+  };
   return {
     getPeople, setPeople,
   };
