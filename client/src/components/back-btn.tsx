@@ -1,12 +1,20 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 export default function BackBtn() {
+  const history = useHistory();
   return (
     <div style={{ textAlign: 'center' }}>
-      <Link to="/" className="btn btn-secondary">
+      <button
+        className="btn btn-secondary"
+        type="submit"
+        onClick={() => {
+          history.push('/');
+          window.location.reload();
+        }}
+      >
         Back
-      </Link>
+      </button>
     </div>
   );
 }
