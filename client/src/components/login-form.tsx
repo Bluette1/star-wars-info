@@ -25,6 +25,8 @@ const LoginForm = () => {
           isLoggedInVar(true);
           history.push('/');
           window.location.reload();
+        } else {
+          alert('There was an error while trying to login. Please register and then try again.');
         }
       },
     },
