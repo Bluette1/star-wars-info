@@ -12,7 +12,7 @@ This project is a wrapper information site for the official [stars wars API](htt
 - Nodejs
 - Prisma
 
-[Live site](https://star-wars-data-app-fresh.herokuapp.com/)
+[Live site](http://starwars-app-revised.herokuapp.com/)
 
 ## Description
 
@@ -21,14 +21,24 @@ This project is a wrapper information site for the official [stars wars API](htt
 ## Run server locally
 Clone the git repo and inside the project root folder in the terminal run:
 
+#### Setting Up Local Database
+- Install and set up postgresql, if not already installed. You can visit this [tutorial](https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-ruby-on-rails-application-on-ubuntu-14-04) for information on how to install postgresql.
+- Create a file named `.env` in the `server` directory according to the `.env-example` file, and add the relevant database credentials.
+
+- To start the client, open the terminal and type the following 
 ```
 cd client
-yarn build-deploy
+yarn install
+yarn start
+```
+- Open another tab in the terminal(CTRL+SHIFT+T) and type the following to run server
+```
 cd server
 yarn install
+npx prisma migrate dev --name init
 yarn server
 ```
-
+- The client site will open in the browser at http://localhost:3000/.
 
 ## Authors
 
