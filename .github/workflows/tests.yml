@@ -5,9 +5,9 @@ name: Test with jest
 
 on:
   push:
-    branches: [ feature/fix-favourites-display-details-page ]
+    branches: [ feature/testing-and-review-update ]
   pull_request:
-    branches: [ feature/fix-favourites-display-details-page ]
+    branches: [ feature/testing-and-review-update ]
 
 jobs:
   build-server:
