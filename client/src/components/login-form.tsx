@@ -25,6 +25,8 @@ const LoginForm = () => {
           isLoggedInVar(true);
           history.push('/');
           window.location.reload();
+        } else {
+          alert('Login failed. Please register first before trying to login.');
         }
       },
     },

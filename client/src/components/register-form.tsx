@@ -22,6 +22,7 @@ export default function RegisterForm() {
         localStorage.setItem('userId', signup.id as string);
         isLoggedInVar(true);
         history.push('/');
+        window.location.reload();
       }
     },
   });
