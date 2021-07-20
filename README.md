@@ -19,7 +19,7 @@ This project is a wrapper information site for the official [stars wars API](htt
 This project is a wrapper information site for the official [stars wars API](https://swapi.dev/), built using Apollo GraphQL server and React client.
 
 ## Run server locally
-Clone the git repo.
+Clone this git repo.
 
 #### Setting Up Local Database
 - Install and set up postgresql, if not already installed. You can visit this [tutorial](https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-ruby-on-rails-application-on-ubuntu-14-04) for information on how to install postgresql.
