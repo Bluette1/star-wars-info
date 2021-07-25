@@ -5,9 +5,9 @@ name: Test with jest
 
 on:
   push:
-    branches: [ feature/testing-and-review-update ]
+    branches: [ feature/add-anchor-tags-to-link-item-component ]
   pull_request:
-    branches: [ feature/testing-and-review-update ]
+    branches: [ feature/add-anchor-tags-to-link-item-component ]
 
 jobs:
   build-server:

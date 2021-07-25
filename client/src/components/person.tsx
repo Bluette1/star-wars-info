@@ -3,7 +3,7 @@ import uuid from 'react-uuid';
 import QueryString from 'query-string';
 import { gql, useQuery } from '@apollo/client';
 import PropTypes from 'prop-types';
-import LinkItem from './link-item';
+import { LinkItem, getId } from './link-item';
 import authLink from '../auth-link';
 import BackBtn from './back-btn';
 import Favourite from './favourite';
@@ -79,8 +79,8 @@ const Person = ({ location: searchParams }) => {
         {gender}
       </p>
       <p>
-        Homeworld:&nbsp;
-        {homeworld}
+        Homeworld:&nbsp;Planet ID No&nbsp;
+        <a style={{ textDecoration: 'underline' }} href={homeworld} target="_blank" rel="noopener noreferrer">{getId(homeworld)}</a>
       </p>
       <ul className="list-group">
         <li className="list-group-item">
@@ -99,34 +99,34 @@ const Person = ({ location: searchParams }) => {
       <h4 className="my-3">More details</h4>
       <ul className="list-group">
         <li className="list-group-item">
-          Films:
+          Film IDs:&nbsp;
           {films.map((film) => (
             <LinkItem key={`film-${uuid()}`} link={film} />
           ))}
         </li>
         <li className="list-group-item">
-          Species:
+          Species IDs:&nbsp;
           {species.map((thisSpecies) => (
             <LinkItem key={`species-${uuid()}`} link={thisSpecies} />
           ))}
         </li>
         <li className="list-group-item">
-          Vehicles:
+          Vehicles IDs:&nbsp;
           {vehicles.map((vehicle) => (
             <LinkItem key={`vehicle-${uuid()}`} link={vehicle} />
           ))}
         </li>
 
         <li className="list-group-item">
-          Starships:
+          Starship IDs:&nbsp;
           {starships.map((starship) => (
             <LinkItem key={`vehicle-${uuid()}`} link={starship} />
           ))}
         </li>
       </ul>
       <h4 className="mb-3">
-        Person Url:
-        <LinkItem link={url} />
+        Person Url:&nbsp;
+        <a href={url} target="_blank" rel="noopener noreferrer">{url}</a>
       </h4>
       <hr />
       <BackBtn />
