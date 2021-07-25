@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const LinkItem = ({ link }) => (
-  <p>
+  <a href={link} target="_blank" rel="noreferrer">
     {`<${link}>`}
-  </p>
+  </a>
 );
 
 LinkItem.propTypes = {

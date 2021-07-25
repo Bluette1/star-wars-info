@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import FavouriteContainer from './favourite-container';
 import useFavourites from '../hooks/useFavourites';
 import { favouritePeopleVar } from '../cache';
+import LinkItem from './link-item';
 
 const PersonItem = ({
   person: {
@@ -15,12 +16,8 @@ const PersonItem = ({
   } = useFavourites(favouritePeopleVar);
   const [isInFavouritesState, setIsInFavouritesState] = useState(isInFavourites(name));
 
-  // const favourite = () => (isInFavouritesState ? '&favourite=true' : '');
-  // const [favouriteState, setFavouriteState] = useState(favourite());
-
   const handleFavouriteChange = () => {
     setIsInFavouritesState(!isInFavouritesState);
-    // setFavouriteState(favourite());
   };
 
   return (
@@ -41,7 +38,7 @@ const PersonItem = ({
           </p>
           <p>
             Homeworld:&nbsp;
-            {homeworld}
+            <LinkItem link={homeworld} />
           </p>
         </div>
         <div className="col-md-6 d-md-flex justify-content-md-between">

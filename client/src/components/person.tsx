@@ -80,7 +80,7 @@ const Person = ({ location: searchParams }) => {
       </p>
       <p>
         Homeworld:&nbsp;
-        {homeworld}
+        <LinkItem link={homeworld} />
       </p>
       <ul className="list-group">
         <li className="list-group-item">
@@ -101,31 +101,39 @@ const Person = ({ location: searchParams }) => {
         <li className="list-group-item">
           Films:
           {films.map((film) => (
-            <LinkItem key={`film-${uuid()}`} link={film} />
+            <p>
+              <LinkItem key={`film-${uuid()}`} link={film} />
+            </p>
           ))}
         </li>
         <li className="list-group-item">
           Species:
           {species.map((thisSpecies) => (
-            <LinkItem key={`species-${uuid()}`} link={thisSpecies} />
+            <p>
+              <LinkItem key={`species-${uuid()}`} link={thisSpecies} />
+            </p>
           ))}
         </li>
         <li className="list-group-item">
           Vehicles:
           {vehicles.map((vehicle) => (
-            <LinkItem key={`vehicle-${uuid()}`} link={vehicle} />
+            <p>
+              <LinkItem key={`vehicle-${uuid()}`} link={vehicle} />
+            </p>
           ))}
         </li>
 
         <li className="list-group-item">
           Starships:
           {starships.map((starship) => (
-            <LinkItem key={`vehicle-${uuid()}`} link={starship} />
+            <p>
+              <LinkItem key={`vehicle-${uuid()}`} link={starship} />
+            </p>
           ))}
         </li>
       </ul>
       <h4 className="mb-3">
-        Person Url:
+        Person Url:&nbsp;
         <LinkItem link={url} />
       </h4>
       <hr />
