@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import FavouriteContainer from './favourite-container';
 import useFavourites from '../hooks/useFavourites';
 import { favouritePeopleVar } from '../cache';
-import LinkItem from './link-item';
+import { getId } from './link-item';
 
 const PersonItem = ({
   person: {
@@ -38,7 +38,9 @@ const PersonItem = ({
           </p>
           <p>
             Homeworld:&nbsp;
-            <LinkItem link={homeworld} />
+            Planet ID No
+            {' '}
+            <a style={{ textDecoration: 'underline' }} href={homeworld} target="_blank" rel="noopener noreferrer">{getId(homeworld)}</a>
           </p>
         </div>
         <div className="col-md-6 d-md-flex justify-content-md-between">

@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/static/css/main.441c2f72.chunk.css",
-    "main.js": "/static/js/main.ec1c7585.chunk.js",
-    "main.js.map": "/static/js/main.ec1c7585.chunk.js.map",
+    "main.css": "/static/css/main.2f4739be.chunk.css",
+    "main.js": "/static/js/main.2e7d47a5.chunk.js",
+    "main.js.map": "/static/js/main.2e7d47a5.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.03887cff.js",
     "runtime-main.js.map": "/static/js/runtime-main.03887cff.js.map",
     "static/js/2.c0effa88.chunk.js": "/static/js/2.c0effa88.chunk.js",
     "static/js/2.c0effa88.chunk.js.map": "/static/js/2.c0effa88.chunk.js.map",
     "index.html": "/index.html",
-    "static/css/main.441c2f72.chunk.css.map": "/static/css/main.441c2f72.chunk.css.map",
+    "static/css/main.2f4739be.chunk.css.map": "/static/css/main.2f4739be.chunk.css.map",
     "static/js/2.c0effa88.chunk.js.LICENSE.txt": "/static/js/2.c0effa88.chunk.js.LICENSE.txt",
     "static/media/star-wars-logo.057103d6.svg": "/static/media/star-wars-logo.057103d6.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.03887cff.js",
     "static/js/2.c0effa88.chunk.js",
-    "static/css/main.441c2f72.chunk.css",
-    "static/js/main.ec1c7585.chunk.js"
+    "static/css/main.2f4739be.chunk.css",
+    "static/js/main.2e7d47a5.chunk.js"
   ]
 }

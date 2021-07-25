@@ -25,4 +25,5 @@ a {
 
 a:hover {
   color: #ffff;
+  text-decoration: none;
 }
