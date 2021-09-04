@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { gql } from '@apollo/client';
 import { graphql } from '@apollo/client/react/hoc';
 import { compose } from 'recompose';
 import PropTypes from 'prop-types';
 import { favouritePeopleVar, peopleVar } from '../cache';
-import Page from './page';
 import authLink from '../auth-link';
 import usePeopleContent from '../hooks/usePeopleContent';
 import useFavourites from '../hooks/useFavourites';
 
+const Page = React.lazy(() => import('./page'));
 const PEOPLE_QUERY = gql`
   query People($page: Int) {
     people(page: $page) {
@@ -32,7 +32,10 @@ const People = ({
   pageData,
   myPeopleData,
 }) => {
-  if (pageData.error || myPeopleData.error) { return (<p>Error...Please try again</p>); }
+  if (pageData.error || myPeopleData.error) {
+    console.log('Error while getting data');
+    return null;
+  }
   if (
     pageData.loading
     || myPeopleData.loading) {
@@ -52,11 +55,13 @@ const People = ({
   myPeople.forEach((person) => favouritePeople.push(person.name));
   setFavourites(favouritePeople);
   return (
-    <Page
-      refetch={pageData.refetch}
-      setPeople={setPeople}
-      getPeople={getPeople}
-    />
+    <Suspense fallback={<p>Loading...</p>}>
+      <Page
+        refetch={pageData.refetch}
+        setPeople={setPeople}
+        getPeople={getPeople}
+      />
+    </Suspense>
   );
 };
 
