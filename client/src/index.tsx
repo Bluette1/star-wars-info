@@ -23,7 +23,7 @@ const typeDefs = gql`
 // this can be local or a remote endpoint
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   cache,
-  uri: '/graphql',
+  uri: 'https://starwars-api.fly.dev/graphql',
   headers: {
     authorization: localStorage.getItem('token') || '',
     'client-name': 'Star Wars [web]',
