@@ -12,7 +12,7 @@ This project is a wrapper information site for the official [stars wars API](htt
 - Nodejs
 - Prisma
 
-[Live site](http://starwars-app-revised.herokuapp.com/)
+[Live site](https://starwars-app.fly.dev/)
 
 ## Description
 
