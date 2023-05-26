@@ -12,7 +12,7 @@ This project is a wrapper information site for the official [stars wars API](htt
 - Nodejs
 - Prisma
 
-[Live site](http://starwars-app-revised.herokuapp.com/)
+[Live site](https://starwars-app.fly.dev/)
 
 ## Description
 
@@ -74,6 +74,18 @@ yarn server
 - Review and refurbish the styling
 - Add more code testing
 - Add more information/pages such as the user profile page
+
+### Fly.io
+- Both the code for the static and non-static site reside in one folder for this project
+
+- Deploying static site:
+  - Follow instructions in the [Fly.io documention](https://fly.io/docs/languages-and-frameworks/static/)
+
+- Deploying non-static site:
+  - Remove the `Dockerfile` for deploying the static site (you can just temporarily rename it to something else)
+  - Follow instructions in the [Fly.io documention](https://fly.io/docs/languages-and-frameworks/node/)
+    - To make sure you're deploying the non-static and not the static site, run: `flyctl deploy --app starwars-api`, and vice-versa.
+
 
 ## 🤝 Contributing
 
