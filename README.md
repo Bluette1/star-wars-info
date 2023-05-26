@@ -75,6 +75,18 @@ yarn server
 - Add more code testing
 - Add more information/pages such as the user profile page
 
+### Fly.io
+- Both the code for the static and non-static site reside in one folder for this project
+
+- Deploying static site:
+  - Follow instructions in the [Fly.io documention](https://fly.io/docs/languages-and-frameworks/static/)
+
+- Deploying non-static site:
+  - Remove the `Dockerfile` for deploying the static site (you can just temporarily rename it to something else)
+  - Follow instructions in the [Fly.io documention](https://fly.io/docs/languages-and-frameworks/node/)
+    - To make sure you're deploying the non-static and not the static site, run: `flyctl deploy --app starwars-api`, and vice-versa.
+
+
 ## 🤝 Contributing
 
 Contributions, issues and feature requests are welcome!
