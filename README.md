@@ -23,6 +23,7 @@ Clone this git repo.
 
 #### Setting Up Local Database
 - Install and set up postgresql, if not already installed. You can visit this [tutorial](https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-ruby-on-rails-application-on-ubuntu-14-04) for information on how to install postgresql.
+- Create the database and take note of the credentials.
 - Create a file named `.env` in the `server` directory according to the `.env-example` file, and add the relevant database credentials.
 
 - To start the client, open the terminal and inside the project root folder type the following 
