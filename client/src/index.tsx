@@ -8,7 +8,7 @@ import {
   ApolloProvider,
   gql,
 } from '@apollo/client';
-import Routes from './routes';
+import App from './routes';
 import { cache } from './cache';
 
 const typeDefs = gql`
@@ -32,15 +32,11 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   resolvers: {},
 });
 
-function Content() {
-  return <Routes />;
-}
-
 ReactDOM.render(
   <ApolloProvider client={client}>
     <BrowserRouter>
       <React.StrictMode>
-        <Content />
+        <App />
       </React.StrictMode>
     </BrowserRouter>
   </ApolloProvider>,
