@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, useHistory } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import './css/index.css';
 import {
   ApolloClient,
@@ -21,8 +21,8 @@ const typeDefs = gql`
 // this can be local or a remote endpoint
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   cache,
-  // uri: 'https://starwars-api.fly.dev/graphql',
-  uri: 'http://localhost:4000/graphql',
+  uri: 'https://starwars-api.fly.dev/graphql',
+  // uri: 'http://localhost:4000/graphql',
   headers: {
     authorization: localStorage.getItem('token') || '',
     'client-name': 'Star Wars [web]',
@@ -33,8 +33,6 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
 });
 
 function Content() {
-  const history = useHistory();
-  history.push('/');
   return <Routes />;
 }
 
