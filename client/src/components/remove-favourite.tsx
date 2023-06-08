@@ -2,7 +2,7 @@ import React from 'react';
 import { gql, useMutation } from '@apollo/client';
 import PropTypes from 'prop-types';
 import heartred from './heart-red.png';
-import { favouritePeopleVar } from '../cache';
+import { favouritePeopleVar, isLoggedInVar } from '../cache';
 import useFavourites from '../hooks/useFavourites';
 
 const DELETE_PERSON = gql`
@@ -18,13 +18,9 @@ export default function RemoveFavourite({ name, handleFavouriteChange }) {
     deleteFavourite,
   } = useFavourites(favouritePeopleVar);
 
-  const [deletePerson, { loading, error }] = useMutation(DELETE_PERSON, {
-    onCompleted: ({ deletePersonWithName }) => {
-      if (deletePersonWithName) {
-        deleteFavourite(name);
-      }
-    },
-  });
+  const isLoggedIn = isLoggedInVar();
+
+  const [deletePerson, { loading, error }] = useMutation(DELETE_PERSON);
   if (loading) return <h4>Loading...</h4>;
   if (error) return <p>An error occurred</p>;
   return (
@@ -37,7 +33,10 @@ export default function RemoveFavourite({ name, handleFavouriteChange }) {
         alt="Like icon"
         style={{ cursor: 'pointer' }}
         onClick={() => {
-          deletePerson({ variables: { name } });
+          if (isLoggedIn) {
+            deletePerson({ variables: { name } });
+          }
+          deleteFavourite(name);
           handleFavouriteChange();
         }}
       />

@@ -2,7 +2,7 @@ import React from 'react';
 import { gql, useMutation } from '@apollo/client';
 import PropTypes from 'prop-types';
 import heartgray from './heart-gray.png';
-import { favouritePeopleVar } from '../cache';
+import { favouritePeopleVar, isLoggedInVar } from '../cache';
 import useFavourites from '../hooks/useFavourites';
 
 const POST_PERSON = gql`
@@ -20,15 +20,12 @@ export default function AddFavourite({ name, handleFavouriteChange }) {
   const {
     addFavourite,
   } = useFavourites(favouritePeopleVar);
-  const [postPerson, { loading, error }] = useMutation(POST_PERSON, {
-    onCompleted: ({ postPersonWithName }) => {
-      if (postPersonWithName) {
-        addFavourite(name);
-      }
-    },
-  });
+  const isLoggedIn = isLoggedInVar();
+
+  const [postPerson, { loading, error }] = useMutation(POST_PERSON);
   if (loading) return <h4>Loading...</h4>;
   if (error) return <p>An error occurred</p>;
+
   return (
     <div className="d-flex p-3">
       Like:&nbsp;
@@ -39,7 +36,10 @@ export default function AddFavourite({ name, handleFavouriteChange }) {
         src={heartgray}
         alt="Like icon"
         onClick={() => {
-          postPerson({ variables: { name } });
+          if (isLoggedIn) {
+            postPerson({ variables: { name } });
+          }
+          addFavourite(name);
           handleFavouriteChange();
         }}
       />

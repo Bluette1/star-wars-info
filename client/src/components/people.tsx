@@ -3,7 +3,7 @@ import { gql } from '@apollo/client';
 import { graphql } from '@apollo/client/react/hoc';
 import { compose } from 'recompose';
 import PropTypes from 'prop-types';
-import { favouritePeopleVar, peopleVar } from '../cache';
+import { favouritePeopleVar, peopleVar, isLoggedInVar } from '../cache';
 import Page from './page';
 import authLink from '../auth-link';
 import usePeopleContent from '../hooks/usePeopleContent';
@@ -32,25 +32,34 @@ const People = ({
   pageData,
   myPeopleData,
 }) => {
-  if (pageData.error || myPeopleData.error) { return (<p>Error...Please try again</p>); }
+  if (pageData.error) { return (<p>Error...Please try again</p>); }
+  const isLoggedIn = isLoggedInVar();
+
+  if (myPeopleData.error) {
+    if (isLoggedIn) {
+      return (<p>Error...Please try again</p>);
+    }
+  }
+
   if (
     pageData.loading
     || myPeopleData.loading) {
     return <p>Loading...</p>;
   }
 
-  const {
-    setFavourites,
-  } = useFavourites(favouritePeopleVar);
-
   const { getPeople, setPeople } = usePeopleContent(peopleVar);
 
   setPeople(1, pageData.people);
+  if (isLoggedIn) {
+    const {
+      setFavourites,
+    } = useFavourites(favouritePeopleVar);
+    const favouritePeople: string[] = [];
+    const { myPeople } = myPeopleData;
+    myPeople.forEach((person) => favouritePeople.push(person.name));
+    setFavourites(favouritePeople);
+  }
 
-  const favouritePeople: string[] = [];
-  const { myPeople } = myPeopleData;
-  myPeople.forEach((person) => favouritePeople.push(person.name));
-  setFavourites(favouritePeople);
   return (
     <Page
       refetch={pageData.refetch}
