@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-import { useHistory } from 'react-router-dom';
 import { gql, useMutation } from '@apollo/client';
 import RegisterButton from './register-button';
 import { isLoggedInVar } from '../cache';
@@ -14,7 +13,6 @@ export const LOGIN_USER = gql`
 `;
 
 const LoginForm = () => {
-  const history = useHistory();
   const [mutation, { loading: inFlight, error: err }] = useMutation(
     LOGIN_USER,
     {
@@ -23,8 +21,7 @@ const LoginForm = () => {
           localStorage.setItem('token', login.token as string);
           localStorage.setItem('userId', login.id as string);
           isLoggedInVar(true);
-          history.push('/');
-          window.location.reload();
+          window.location.replace('/');
         } else {
           alert('Login failed. Please register first before trying to login.');
         }
