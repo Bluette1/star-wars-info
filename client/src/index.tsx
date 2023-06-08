@@ -7,10 +7,8 @@ import {
   NormalizedCacheObject,
   ApolloProvider,
   gql,
-  // useQuery,
 } from '@apollo/client';
 import Routes from './routes';
-// import PublicRoutes from './public-routes';
 import { cache } from './cache';
 
 const typeDefs = gql`
@@ -34,23 +32,9 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   resolvers: {},
 });
 
-// const IS_LOGGED_IN = gql`
-//   query IsUserLoggedIn {
-//     isLoggedIn @client
-//   }
-// `;
-
 function Content() {
-  // const { data } = useQuery(IS_LOGGED_IN);
   const history = useHistory();
-  // let content;
-  // if (data.isLoggedIn) {
   history.push('/');
-  // content = <Routes />;
-  // } else {
-  // history.push('/login');
-  // content = <PublicRoutes />;
-  // }
   return <Routes />;
 }
 
