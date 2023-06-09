@@ -1,16 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, useHistory } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import './css/index.css';
 import {
   ApolloClient,
   NormalizedCacheObject,
   ApolloProvider,
   gql,
-  useQuery,
 } from '@apollo/client';
-import Routes from './routes';
-import PublicRoutes from './public-routes';
+import App from './routes';
 import { cache } from './cache';
 
 const typeDefs = gql`
@@ -24,6 +22,7 @@ const typeDefs = gql`
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   cache,
   uri: 'https://starwars-api.fly.dev/graphql',
+  // uri: 'http://localhost:4000/graphql',
   headers: {
     authorization: localStorage.getItem('token') || '',
     'client-name': 'Star Wars [web]',
@@ -33,31 +32,11 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   resolvers: {},
 });
 
-const IS_LOGGED_IN = gql`
-  query IsUserLoggedIn {
-    isLoggedIn @client
-  }
-`;
-
-function IsLoggedIn() {
-  const { data } = useQuery(IS_LOGGED_IN);
-  const history = useHistory();
-  let content;
-  if (data.isLoggedIn) {
-    history.push('/');
-    content = <Routes />;
-  } else {
-    history.push('/login');
-    content = <PublicRoutes />;
-  }
-  return content;
-}
-
 ReactDOM.render(
   <ApolloProvider client={client}>
     <BrowserRouter>
       <React.StrictMode>
-        <IsLoggedIn />
+        <App />
       </React.StrictMode>
     </BrowserRouter>
   </ApolloProvider>,

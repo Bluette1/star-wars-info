@@ -1,16 +1,24 @@
-import React, { Fragment } from 'react';
+import React from 'react';
+import { gql, useQuery } from '@apollo/client';
 import PropTypes from 'prop-types';
 import uuid from 'react-uuid';
 import { currentPage } from '../cache';
-
 import PageInput from './page-input';
 import PersonItem from './person-item';
 import PagesBtnGroup from './pages-btn-group';
 import Logout from './logout-button';
+import Login from './login-button';
+
+const IS_LOGGED_IN = gql`
+  query IsUserLoggedIn {
+    isLoggedIn @client
+  }
+`;
 
 const getPage = () => parseInt(currentPage(), 10);
 
 export default function PageComponent({ page, handlePageChange }) {
+  const { data } = useQuery(IS_LOGGED_IN);
   return (
     <>
       <div
@@ -20,7 +28,7 @@ export default function PageComponent({ page, handlePageChange }) {
           borderRadius: '50%',
         }}
       >
-        <Logout />
+        {data.isLoggedIn ? <Logout /> : <Login />}
         <PageInput page={getPage()} getPage={handlePageChange} />
         <PagesBtnGroup pg={getPage()} getPage={handlePageChange} />
       </div>
